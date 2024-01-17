@@ -5,6 +5,8 @@ import LoginPage from './loginPage/LoginPage';
 import AgreementPage from './agreementPage/AgreementPage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Icon from 'react-native-vector-icons/FontAwesome';
+Icon.loadFont();
 
 const Stack = createNativeStackNavigator();
 export default class App extends Component {
