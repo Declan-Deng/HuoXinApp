@@ -1,21 +1,30 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
+  KeyboardAvoidingView,
   Text,
   View,
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  Platform,
+  ScrollView,
 } from 'react-native';
 
-export default class FlexDirection extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {visible: false}; // 初始化状态
-  }
-  render() {
-    const {visible} = this.state; // 从状态中解构 visible
-    return (
-      <View>
+const Stack = createNativeStackNavigator();
+
+function loginPage() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const doLogin = () => {
+    alert(`用户名: ${this.state.username}, 密码: ${this.state.password}`);
+  };
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView>
         <View>
           <Text style={[styles.h2]}>火星智慧心理AI检测</Text>
           <View style={[styles.container]}>
@@ -25,25 +34,32 @@ export default class FlexDirection extends Component {
               <TextInput
                 style={[styles.itemBase]}
                 placeholder=" 请输入用户名"
+                value={username}
+                onChangeText={setUsername}
               />
             </View>
+
             <View style={styles.inputContainer}>
               <Text style={styles.label}>密码:</Text>
               <TextInput
                 style={styles.itemBase}
-                placeholder="请输入密码"
-                secureTextEntry={!visible}
+                placeholder=" 请输入密码"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={true}
               />
             </View>
           </View>
-          <TouchableOpacity style={styles.circleButton}>
+          <TouchableOpacity style={styles.circleButton} onPress={doLogin}>
             <Text style={styles.buttonText}>确认登录</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    );
-  }
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
 }
+
+export default class FlexDirection extends Component {}
 
 const styles = StyleSheet.create({
   container: {
@@ -82,6 +98,7 @@ const styles = StyleSheet.create({
     margin: 20,
     marginRight: 50,
     flex: 1,
+    padding: 10,
   },
 
   circleButton: {
