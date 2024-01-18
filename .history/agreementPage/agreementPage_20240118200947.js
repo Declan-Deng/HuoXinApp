@@ -8,12 +8,12 @@ import {
 import React, {useState} from 'react';
 import {Checkbox} from '@ant-design/react-native';
 
-export default function AgreementPage(props) {
+export default function AgreementPage() {
   const [agree, setAgree] = useState(true);
 
-  const handleAccept = props => {
+  const handleAccept = () => {
     // 处理用户接受协议的逻辑
-    console.log(props);
+    console.log('用户接受了协议');
     props.navigation.navigate('检测界面');
   };
 
@@ -64,7 +64,7 @@ export default function AgreementPage(props) {
 
         <TouchableOpacity
           style={[styles.button, !agree && styles.buttonDisabled]}
-          onPress={() => handleAccept(props)}
+          onPress={handleAccept}
           disabled={!agree}>
           <Text style={styles.buttonText}>进入检测</Text>
         </TouchableOpacity>

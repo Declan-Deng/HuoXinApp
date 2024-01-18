@@ -16,7 +16,6 @@ function LoginPage(props) {
 
   const doLogin = props => {
     // alert(`用户名: ${username}, 密码: ${password}`);
-    console.log(props);
     props.navigation.navigate('用户协议');
   };
 
@@ -110,6 +109,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', // 水平居中
     marginLeft: 'auto',
     marginRight: 'auto',
+    elevation: 2,
   },
   buttonText: {
     color: 'white', // 文本颜色

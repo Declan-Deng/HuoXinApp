@@ -16,7 +16,6 @@ function LoginPage(props) {
 
   const doLogin = props => {
     // alert(`用户名: ${username}, 密码: ${password}`);
-    console.log(props);
     props.navigation.navigate('用户协议');
   };
 
@@ -126,6 +125,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     margin: 20,
     marginHorizontal: 100,
+    elevation: 2,
   },
   icon: {
     width: 20, // 根据图标的实际大小调整

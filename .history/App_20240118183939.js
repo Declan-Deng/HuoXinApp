@@ -3,7 +3,6 @@ import {Text, View} from 'react-native';
 
 import LoginPage from './loginPage/LoginPage';
 import AgreementPage from './agreementPage/AgreementPage';
-import TestPage from './testPage/TestPage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -15,28 +14,18 @@ export default class App extends Component {
         <Stack.Navigator
           screenOptions={{
             headerShown: true,
-            // 其他全局配置项
+            // 其他配置项
           }}>
           <Stack.Screen
             name="登录"
             component={LoginPage}
-            options={{
-              headerShown: false,
-              presentation: 'card',
-            }}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="用户协议"
             component={AgreementPage}
-            options={{
-              headerTitleAlign: 'center',
-              cardShadowEnabled: true,
-              cardOverlayEnabled: true,
-              animationEnabled: true,
-              presentation: 'card',
-            }}
+            options={{headerTitleAlign: 'center'}}
           />
-          <Stack.Screen name="检测界面" component={TestPage} />
         </Stack.Navigator>
       </NavigationContainer>
     );

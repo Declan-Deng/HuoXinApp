@@ -36,7 +36,7 @@ export default class App extends Component {
               presentation: 'card',
             }}
           />
-          <Stack.Screen name="检测界面" component={TestPage} />
+          <Stack.Screen name="测试" component={TestPage} />
         </Stack.Navigator>
       </NavigationContainer>
     );

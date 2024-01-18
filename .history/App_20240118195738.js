@@ -3,7 +3,6 @@ import {Text, View} from 'react-native';
 
 import LoginPage from './loginPage/LoginPage';
 import AgreementPage from './agreementPage/AgreementPage';
-import TestPage from './testPage/TestPage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -23,6 +22,7 @@ export default class App extends Component {
             options={{
               headerShown: false,
               presentation: 'card',
+              // 如果需要特定的卡片式动画，可以在这里配置
             }}
           />
           <Stack.Screen
@@ -34,9 +34,9 @@ export default class App extends Component {
               cardOverlayEnabled: true,
               animationEnabled: true,
               presentation: 'card',
+              // 这里也可以添加卡片式动画的特定配置
             }}
           />
-          <Stack.Screen name="检测界面" component={TestPage} />
         </Stack.Navigator>
       </NavigationContainer>
     );

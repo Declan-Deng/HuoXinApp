@@ -16,7 +16,6 @@ function LoginPage(props) {
 
   const doLogin = props => {
     // alert(`用户名: ${username}, 密码: ${password}`);
-    console.log(props);
     props.navigation.navigate('用户协议');
   };
 
@@ -26,7 +25,6 @@ function LoginPage(props) {
       <ScrollView>
         <View>
           <Text style={[styles.h2]}>火星智慧心理AI检测</Text>
-
           <View style={[styles.container]}>
             <Text style={[styles.h3]}>登录</Text>
             <View style={styles.inputContainer}>

@@ -3,7 +3,6 @@ import {Text, View} from 'react-native';
 
 import LoginPage from './loginPage/LoginPage';
 import AgreementPage from './agreementPage/AgreementPage';
-import TestPage from './testPage/TestPage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -13,17 +12,16 @@ export default class App extends Component {
     return (
       <NavigationContainer>
         <Stack.Navigator
+          mode="card"
           screenOptions={{
             headerShown: true,
-            // 其他全局配置项
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            // 其他配置项
           }}>
           <Stack.Screen
             name="登录"
             component={LoginPage}
-            options={{
-              headerShown: false,
-              presentation: 'card',
-            }}
+            options={{headerShown: false}}
           />
           <Stack.Screen
             name="用户协议"
@@ -33,10 +31,8 @@ export default class App extends Component {
               cardShadowEnabled: true,
               cardOverlayEnabled: true,
               animationEnabled: true,
-              presentation: 'card',
             }}
           />
-          <Stack.Screen name="检测界面" component={TestPage} />
         </Stack.Navigator>
       </NavigationContainer>
     );

@@ -13,7 +13,7 @@ export default function AgreementPage(props) {
 
   const handleAccept = props => {
     // 处理用户接受协议的逻辑
-    console.log(props);
+
     props.navigation.navigate('检测界面');
   };
 
@@ -64,7 +64,7 @@ export default function AgreementPage(props) {
 
         <TouchableOpacity
           style={[styles.button, !agree && styles.buttonDisabled]}
-          onPress={() => handleAccept(props)}
+          onPress={handleAccept(props)}
           disabled={!agree}>
           <Text style={styles.buttonText}>进入检测</Text>
         </TouchableOpacity>
