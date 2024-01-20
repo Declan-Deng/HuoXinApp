@@ -48,7 +48,7 @@ const CameraScreen = () => {
           return currentProgress;
         }
       });
-    }, 600);
+    }, 600); // 每1秒钟增加10%
 
     return () => clearInterval(timer); // 组件卸载时清除定时器
   }, []);
@@ -80,33 +80,26 @@ const CameraScreen = () => {
 
   return (
     <>
-      <ScrollView>
-        <View style={styles.progress}>
-          <LinearProgress
-            style={{
-              marginVertical: 10,
-              height: 20,
-              borderRadius: 20,
-              width: '90%',
-            }}
-            variant="determinate"
-            value={progress}
-          />
-        </View>
+      <View style={styles.progress}>
+        <LinearProgress
+          style={{marginVertical: 10, height: 30}}
+          variant="determinate"
+          value={progress}
+        />
+      </View>
 
-        <View style={styles.mainContainer}>
-          <BoxShadow setting={shadowOpt}>
-            <View style={styles.container}>
-              <Camera
-                device={device}
-                isActive={true}
-                style={styles.camera}
-                orientation="landscape-left"
-              />
-            </View>
-          </BoxShadow>
-        </View>
-      </ScrollView>
+      <View style={styles.mainContainer}>
+        <BoxShadow setting={shadowOpt}>
+          <View style={styles.container}>
+            <Camera
+              device={device}
+              isActive={true}
+              style={styles.camera}
+              orientation="landscape-left"
+            />
+          </View>
+        </BoxShadow>
+      </View>
     </>
   );
 };
@@ -137,8 +130,17 @@ const styles = StyleSheet.create({
   progress: {
     marginHorizontal: 50,
 
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  progressBar: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 });
 

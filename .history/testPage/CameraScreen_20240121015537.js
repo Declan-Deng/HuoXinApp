@@ -16,6 +16,7 @@ import {
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
+import {Button, Progress, WhiteSpace} from '@ant-design/react-native';
 import {LinearProgress} from '@rneui/themed';
 
 // 获取屏幕尺寸
@@ -38,20 +39,31 @@ const CameraScreen = () => {
 
   const [progress, setProgress] = useState(0);
 
+  // useEffect(() => {
+  //   const timer = setInterval(() => {
+  //     setPercent(oldPercent => {
+  //       if (oldPercent < 100) {
+  //         return oldPercent + 0.5;
+  //       }
+  //       clearInterval(timer);
+  //       return 100;
+  //     });
+  //   }, 300); // 每600毫秒增加1%
+
+  //   return () => clearInterval(timer); // 组件卸载时清除定时器
+  // }, []);
+
   useEffect(() => {
     const timer = setInterval(() => {
-      setProgress(currentProgress => {
+      setProgress((currentProgress) => {
         if (currentProgress < 1) {
-          return currentProgress + 0.01;
+          return currentProgress + 0.1;
         } else {
           clearInterval(timer);
           return currentProgress;
         }
       });
-    }, 600);
-
-    return () => clearInterval(timer); // 组件卸载时清除定时器
-  }, []);
+    }, 1000);
 
   const {hasPermission, requestPermission} = useCameraPermission();
 
@@ -80,33 +92,31 @@ const CameraScreen = () => {
 
   return (
     <>
-      <ScrollView>
-        <View style={styles.progress}>
-          <LinearProgress
-            style={{
-              marginVertical: 10,
-              height: 20,
-              borderRadius: 20,
-              width: '90%',
-            }}
-            variant="determinate"
-            value={progress}
-          />
-        </View>
+      <View style={styles.progress}>
+        {/* <View style={{marginRight: 10, height: 10, flex: 1}}> */}
+        {/* <Progress percent={percent} barStyle={styles.progressBar} /> */}
+        {/* </View> */}
+        {/* <Text>{percent}%</Text> */}
 
-        <View style={styles.mainContainer}>
-          <BoxShadow setting={shadowOpt}>
-            <View style={styles.container}>
-              <Camera
-                device={device}
-                isActive={true}
-                style={styles.camera}
-                orientation="landscape-left"
-              />
-            </View>
-          </BoxShadow>
-        </View>
-      </ScrollView>
+        <LinearProgress
+          style={{marginVertical: 10}}
+          variant="determinate"
+          value={progress}
+        />
+      </View>
+
+      <View style={styles.mainContainer}>
+        <BoxShadow setting={shadowOpt}>
+          <View style={styles.container}>
+            <Camera
+              device={device}
+              isActive={true}
+              style={styles.camera}
+              orientation="landscape-left"
+            />
+          </View>
+        </BoxShadow>
+      </View>
     </>
   );
 };
@@ -137,8 +147,17 @@ const styles = StyleSheet.create({
   progress: {
     marginHorizontal: 50,
 
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  progressBar: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
   },
 });
 

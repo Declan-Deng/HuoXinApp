@@ -13,7 +13,6 @@
     "@ant-design/icons-react-native": "^2.3.2",
     "@ant-design/react-native": "^5.0.5",
     "@react-native-camera-roll/camera-roll": "^7.4.0",
-    "@react-native-community/segmented-control": "^2.2.2",
     "@react-native-community/slider": "^4.5.0",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",

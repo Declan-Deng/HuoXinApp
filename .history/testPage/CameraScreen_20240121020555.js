@@ -133,13 +133,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
-  progress: {
-    marginHorizontal: 50,
-
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 });
 
 export default CameraScreen;

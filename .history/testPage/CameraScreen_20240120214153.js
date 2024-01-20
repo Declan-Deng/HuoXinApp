@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -16,7 +16,6 @@ import {
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
-import {LinearProgress} from '@rneui/themed';
 
 // 获取屏幕尺寸
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
@@ -35,23 +34,6 @@ const CameraScreen = () => {
     y: 2,
     style: {marginVertical: 5},
   };
-
-  const [progress, setProgress] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress(currentProgress => {
-        if (currentProgress < 1) {
-          return currentProgress + 0.01;
-        } else {
-          clearInterval(timer);
-          return currentProgress;
-        }
-      });
-    }, 600);
-
-    return () => clearInterval(timer); // 组件卸载时清除定时器
-  }, []);
 
   const {hasPermission, requestPermission} = useCameraPermission();
 
@@ -79,35 +61,18 @@ const CameraScreen = () => {
   console.log('has permissions:', hasPermission);
 
   return (
-    <>
-      <ScrollView>
-        <View style={styles.progress}>
-          <LinearProgress
-            style={{
-              marginVertical: 10,
-              height: 20,
-              borderRadius: 20,
-              width: '90%',
-            }}
-            variant="determinate"
-            value={progress}
+    <View style={styles.mainContainer}>
+      <BoxShadow setting={shadowOpt}>
+        <View style={styles.container}>
+          <Camera
+            device={device}
+            isActive={true}
+            style={styles.camera}
+            orientation="landscape-left"
           />
         </View>
-
-        <View style={styles.mainContainer}>
-          <BoxShadow setting={shadowOpt}>
-            <View style={styles.container}>
-              <Camera
-                device={device}
-                isActive={true}
-                style={styles.camera}
-                orientation="landscape-left"
-              />
-            </View>
-          </BoxShadow>
-        </View>
-      </ScrollView>
-    </>
+      </BoxShadow>
+    </View>
   );
 };
 
@@ -116,27 +81,21 @@ const styles = StyleSheet.create({
     height: smallWidth * 4,
     width: smallWidth * 3,
     transform: [{rotate: '90deg'}],
+    borderRadius: 20,
   },
 
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 3,
+    borderWidth: 2,
     borderRadius: 20,
     overflow: 'hidden',
-    borderColor: 'white',
+    borderColor: ,
   },
 
   mainContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  progress: {
-    marginHorizontal: 50,
-
     justifyContent: 'center',
     alignItems: 'center',
   },
