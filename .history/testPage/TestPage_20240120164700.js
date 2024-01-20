@@ -4,6 +4,8 @@ import CameraScreen from './CameraScreen';
 import {FullScreen, useFullScreenHandle} from 'react-full-screen';
 
 export default function TestPage() {
+  const handle = useFullScreenHandle();
+
   return (
     <ScrollView>
       <View>

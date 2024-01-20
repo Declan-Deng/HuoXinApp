@@ -23,18 +23,6 @@ const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 const smallWidth = screenWidth * 0.1;
 
 const CameraScreen = () => {
-  const shadowOpt = {
-    width: smallWidth * 4,
-    height: smallWidth * 3,
-    color: '#000',
-    border: 2,
-    radius: 20,
-    opacity: 0.2,
-    x: 0,
-    y: 3,
-    style: {marginVertical: 5},
-  };
-
   const {hasPermission, requestPermission} = useCameraPermission();
 
   const device = useCameraDevice('front');
@@ -62,11 +50,11 @@ const CameraScreen = () => {
 
   return (
     <ScrollView>
-      <BoxShadow setting={shadowOpt}>
-        {/* <View style={styles.container}> */}
-        <Camera device={device} isActive={true} style={styles.camera} />
-        {/* </View> */}
-      </BoxShadow>
+      <Shadow setting={shadowOpt}>
+        <View style={styles.container}>
+          <Camera device={device} isActive={true} style={styles.camera} />
+        </View>
+      </Shadow>
     </ScrollView>
   );
 };
@@ -80,13 +68,13 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    // height: smallWidth * 3, // 保证容器尺寸与 Camera 组件尺寸一致
-    // width: smallWidth * 4,
+    height: smallWidth * 3, // 保证容器尺寸与 Camera 组件尺寸一致
+    width: smallWidth * 4,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderWidth: 2,
-    // borderRadius: 20,
+    borderWidth: 2,
+    borderRadius: 20,
     overflow: 'hidden',
   },
 });

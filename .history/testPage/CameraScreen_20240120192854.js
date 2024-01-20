@@ -63,9 +63,9 @@ const CameraScreen = () => {
   return (
     <ScrollView>
       <BoxShadow setting={shadowOpt}>
-        {/* <View style={styles.container}> */}
-        <Camera device={device} isActive={true} style={styles.camera} />
-        {/* </View> */}
+        <View style={styles.container}>
+          <Camera device={device} isActive={true} style={styles.camera} />
+        </View>
       </BoxShadow>
     </ScrollView>
   );
@@ -85,8 +85,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderWidth: 2,
-    // borderRadius: 20,
+    borderWidth: 2,
+    borderRadius: 20,
     overflow: 'hidden',
   },
 });

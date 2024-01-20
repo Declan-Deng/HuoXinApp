@@ -28,7 +28,7 @@ const CameraScreen = () => {
     height: smallWidth * 3,
     color: '#000',
     border: 2,
-    radius: 20,
+    radius: 3,
     opacity: 0.2,
     x: 0,
     y: 3,
@@ -63,9 +63,9 @@ const CameraScreen = () => {
   return (
     <ScrollView>
       <BoxShadow setting={shadowOpt}>
-        {/* <View style={styles.container}> */}
-        <Camera device={device} isActive={true} style={styles.camera} />
-        {/* </View> */}
+        <View style={styles.container}>
+          <Camera device={device} isActive={true} style={styles.camera} />
+        </View>
       </BoxShadow>
     </ScrollView>
   );
@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    // height: smallWidth * 3, // 保证容器尺寸与 Camera 组件尺寸一致
-    // width: smallWidth * 4,
+    height: smallWidth * 3, // 保证容器尺寸与 Camera 组件尺寸一致
+    width: smallWidth * 4,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // borderWidth: 2,
-    // borderRadius: 20,
+    borderWidth: 2,
+    borderRadius: 20,
     overflow: 'hidden',
   },
 });

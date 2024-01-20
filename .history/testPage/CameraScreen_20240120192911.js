@@ -63,9 +63,9 @@ const CameraScreen = () => {
   return (
     <ScrollView>
       <BoxShadow setting={shadowOpt}>
-        {/* <View style={styles.container}> */}
-        <Camera device={device} isActive={true} style={styles.camera} />
-        {/* </View> */}
+        <View style={styles.container}>
+          <Camera device={device} isActive={true} style={styles.camera} />
+        </View>
       </BoxShadow>
     </ScrollView>
   );

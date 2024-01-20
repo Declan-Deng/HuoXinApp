@@ -17,7 +17,6 @@ export default class App extends Component {
         <Stack.Navigator
           screenOptions={{
             headerShown: true,
-            orientation: 'landscape',
             // 其他全局配置项
           }}>
           <Stack.Screen
@@ -44,6 +43,7 @@ export default class App extends Component {
             component={CameraScreen}
             options={{
               headerShown: false,
+              orientation: 'landscape',
             }}
           />
         </Stack.Navigator>
