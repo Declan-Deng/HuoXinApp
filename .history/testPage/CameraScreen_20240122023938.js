@@ -116,31 +116,26 @@ const CameraScreen = () => {
   return (
     <>
       {/* <ScrollView> */}
-      <View style={{backgroundColor: '#979797'}}>
-        <View style={styles.progress}>
-          <LinearProgress
-            style={{
-              marginVertical: 30,
-              height: 25,
-              borderRadius: 20,
-              width: '70%',
-            }}
-            variant="determinate"
-            value={progress}
-            color="#42b3fe"
-            trackColor="#E0E0E0"
-            animation={{duration: 500}}
-          />
-        </View>
-
-        <Text
-          style={[
-            styles.statusText,
-            {color: progress < 1 ? 'gray' : '#1abe30'},
-          ]}>
-          {isTesting ? (progress < 1 ? '测试中' : '测试完成 ✅') : ''}
-        </Text>
+      <View style={styles.progress}>
+        <LinearProgress
+          style={{
+            marginVertical: 30,
+            height: 25,
+            borderRadius: 20,
+            width: '70%',
+          }}
+          variant="determinate"
+          value={progress}
+          color="#42b3fe"
+          trackColor="#E0E0E0"
+          animation={{duration: 500}}
+        />
       </View>
+
+      <Text
+        style={[styles.statusText, {color: progress < 1 ? 'gray' : '#1abe30'}]}>
+        {isTesting ? (progress < 1 ? '测试中' : '测试完成 ✅') : ''}
+      </Text>
 
       <View style={styles.mainContainer}>
         <BoxShadow setting={shadowOpt}>
@@ -193,7 +188,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#979797',
+    backgroundColor: '#f5f5f5',
   },
 
   progress: {

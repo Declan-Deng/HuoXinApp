@@ -115,8 +115,8 @@ const CameraScreen = () => {
 
   return (
     <>
-      {/* <ScrollView> */}
-      <View style={{backgroundColor: '#979797'}}>
+      <View style={{backgroundColor: 'black'}}>
+        {/* <ScrollView> */}
         <View style={styles.progress}>
           <LinearProgress
             style={{
@@ -140,34 +140,36 @@ const CameraScreen = () => {
           ]}>
           {isTesting ? (progress < 1 ? '测试中' : '测试完成 ✅') : ''}
         </Text>
-      </View>
 
-      <View style={styles.mainContainer}>
-        <BoxShadow setting={shadowOpt}>
-          <View
-            style={[
-              styles.container,
-              progress >= 0.99 && {borderColor: '#4ead4e'},
-            ]}>
-            <Camera
-              device={device}
-              isActive={true}
-              style={styles.camera}
-              orientation="landscape-left"
-            />
-          </View>
-        </BoxShadow>
-      </View>
+        <View style={styles.mainContainer}>
+          <BoxShadow setting={shadowOpt}>
+            <View
+              style={[
+                styles.container,
+                progress >= 0.99 && {borderColor: '#4ead4e'},
+              ]}>
+              <Camera
+                device={device}
+                isActive={true}
+                style={styles.camera}
+                orientation="landscape-left"
+              />
+            </View>
+          </BoxShadow>
+        </View>
 
-      <Overlay
-        isVisible={visible}
-        onBackdropPress={visible}
-        overlayStyle={styles.overlayStyle}>
-        <Text style={styles.textPrimary}>注意事项</Text>
-        <Text style={styles.textSecondary}>你将紧盯屏幕一分钟，请保持观看</Text>
-        <Button title="开始" onPress={toggleOverlay} />
-      </Overlay>
-      {/* </ScrollView> */}
+        <Overlay
+          isVisible={visible}
+          onBackdropPress={visible}
+          overlayStyle={styles.overlayStyle}>
+          <Text style={styles.textPrimary}>注意事项</Text>
+          <Text style={styles.textSecondary}>
+            你将紧盯屏幕一分钟，请保持观看
+          </Text>
+          <Button title="开始" onPress={toggleOverlay} />
+        </Overlay>
+        {/* </ScrollView> */}
+      </View>
     </>
   );
 };
@@ -193,7 +195,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#979797',
   },
 
   progress: {

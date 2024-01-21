@@ -127,7 +127,7 @@ const CameraScreen = () => {
             }}
             variant="determinate"
             value={progress}
-            color="#42b3fe"
+            color="#0b61c9"
             trackColor="#E0E0E0"
             animation={{duration: 500}}
           />

@@ -116,7 +116,7 @@ const CameraScreen = () => {
   return (
     <>
       {/* <ScrollView> */}
-      <View style={{backgroundColor: '#979797'}}>
+      <View style={{backgroundColor: '#878787'}}>
         <View style={styles.progress}>
           <LinearProgress
             style={{
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#979797',
+    backgroundColor: '#868686',
   },
 
   progress: {
