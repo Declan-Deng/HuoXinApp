@@ -25,8 +25,8 @@ const smallWidth = screenWidth * 0.1;
 
 const CameraScreen = () => {
   const shadowOpt = {
-    width: smallWidth * 4,
-    height: smallWidth * 3,
+    width: 800,
+    height: 600,
     color: '#000',
     border: 8,
     radius: 20,
@@ -55,7 +55,7 @@ const CameraScreen = () => {
 
   const {hasPermission, requestPermission} = useCameraPermission();
 
-  const device = useCameraDevice('front');
+  const device = useCameraDevice('back');
 
   const format = useCameraFormat(device, [
     {videoResolution: {width: 3048, height: 2160}},
@@ -80,42 +80,46 @@ const CameraScreen = () => {
 
   return (
     <>
-      <ScrollView>
-        <View style={styles.progress}>
-          <LinearProgress
-            style={{
-              marginVertical: 10,
-              height: 20,
-              borderRadius: 20,
-              width: '90%',
-            }}
-            variant="determinate"
-            value={progress}
-          />
-        </View>
+      {/* <ScrollView> */}
+      <View style={styles.progress}>
+        <LinearProgress
+          style={{
+            marginVertical: 30,
+            height: 25,
+            borderRadius: 20,
+            width: '70%',
+          }}
+          variant="determinate"
+          value={progress}
+        />
+      </View>
 
-        <View style={styles.mainContainer}>
-          <BoxShadow setting={shadowOpt}>
-            <View style={styles.container}>
-              <Camera
-                device={device}
-                isActive={true}
-                style={styles.camera}
-                orientation="landscape-left"
-              />
-            </View>
-          </BoxShadow>
-        </View>
-      </ScrollView>
+      <Text style={styles.statusText}>
+        {progress < 1 ? '正在测试' : '测试完成'}
+      </Text>
+
+      <View style={styles.mainContainer}>
+        <BoxShadow setting={shadowOpt}>
+          <View style={styles.container}>
+            <Camera
+              device={device}
+              isActive={true}
+              style={styles.camera}
+              orientation="landscape-left"
+            />
+          </View>
+        </BoxShadow>
+      </View>
+      {/* </ScrollView> */}
     </>
   );
 };
 
 const styles = StyleSheet.create({
   camera: {
-    height: smallWidth * 4,
-    width: smallWidth * 3,
-    transform: [{rotate: '90deg'}],
+    height: 800,
+    width: 600,
+    transform: [{rotate: '90deg'}, {scaleX: 1.3}],
   },
 
   container: {
@@ -139,6 +143,13 @@ const styles = StyleSheet.create({
 
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  statusText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
 
