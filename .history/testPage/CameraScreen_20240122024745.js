@@ -105,11 +105,10 @@ const CameraScreen = () => {
                 height: 25,
                 borderRadius: 20,
                 width: '70%',
-                elevation: 3,
               }}
               variant="determinate"
               value={progress}
-              color={progress < 1 ? '#42b3fe' : '#1abe30'}
+              color="#42b3fe"
               trackColor="#E0E0E0"
               animation={{duration: 500}}
             />

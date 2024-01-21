@@ -105,7 +105,6 @@ const CameraScreen = () => {
                 height: 25,
                 borderRadius: 20,
                 width: '70%',
-                elevation: 3,
               }}
               variant="determinate"
               value={progress}

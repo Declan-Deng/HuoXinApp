@@ -96,62 +96,59 @@ const CameraScreen = () => {
 
   return (
     <>
-      <ScrollView>
-        <View style={{backgroundColor: '#979797'}}>
-          <View style={styles.progress}>
-            <LinearProgress
-              style={{
-                marginVertical: 30,
-                height: 25,
-                borderRadius: 20,
-                width: '70%',
-                elevation: 3,
-              }}
-              variant="determinate"
-              value={progress}
-              color={progress < 1 ? '#42b3fe' : '#1abe30'}
-              trackColor="#E0E0E0"
-              animation={{duration: 500}}
+      {/* <ScrollView> */}
+      <View style={{backgroundColor: '#979797'}}>
+        <View style={styles.progress}>
+          <LinearProgress
+            style={{
+              marginVertical: 30,
+              height: 25,
+              borderRadius: 20,
+              width: '70%',
+            }}
+            variant="determinate"
+            value={progress}
+            color="#42b3fe"
+            trackColor="#E0E0E0"
+            animation={{duration: 500}}
+          />
+        </View>
+
+        <Text
+          style={[
+            styles.statusText,
+            {color: progress < 1 ? 'gray' : '#1abe30'},
+          ]}>
+          {isTesting ? (progress < 1 ? '测试中' : '测试完成 ✅') : ''}
+        </Text>
+      </View>
+
+      <View style={styles.mainContainer}>
+        <BoxShadow setting={shadowOpt}>
+          <View
+            style={[
+              styles.container,
+              progress >= 0.99 && {borderColor: '#4ead4e'},
+            ]}>
+            <Camera
+              device={device}
+              isActive={true}
+              style={styles.camera}
+              orientation="landscape-left"
             />
           </View>
+        </BoxShadow>
+      </View>
 
-          <Text
-            style={[
-              styles.statusText,
-              {color: progress < 1 ? 'gray' : '#1abe30'},
-            ]}>
-            {isTesting ? (progress < 1 ? '测试中' : '测试完成 ✅') : ''}
-          </Text>
-        </View>
-
-        <View style={styles.mainContainer}>
-          <BoxShadow setting={shadowOpt}>
-            <View
-              style={[
-                styles.container,
-                progress >= 0.99 && {borderColor: '#4ead4e'},
-              ]}>
-              <Camera
-                device={device}
-                isActive={true}
-                style={styles.camera}
-                orientation="landscape-left"
-              />
-            </View>
-          </BoxShadow>
-        </View>
-
-        <Overlay
-          isVisible={visible}
-          onBackdropPress={visible}
-          overlayStyle={styles.overlayStyle}>
-          <Text style={styles.textPrimary}>注意事项</Text>
-          <Text style={styles.textSecondary}>
-            你将紧盯屏幕一分钟，请保持观看
-          </Text>
-          <Button title="开始" onPress={toggleOverlay} />
-        </Overlay>
-      </ScrollView>
+      <Overlay
+        isVisible={visible}
+        onBackdropPress={visible}
+        overlayStyle={styles.overlayStyle}>
+        <Text style={styles.textPrimary}>注意事项</Text>
+        <Text style={styles.textSecondary}>你将紧盯屏幕一分钟，请保持观看</Text>
+        <Button title="开始" onPress={toggleOverlay} />
+      </Overlay>
+      {/* </ScrollView> */}
     </>
   );
 };
