@@ -90,13 +90,8 @@ const CameraScreen = () => {
     {fps: 60},
   ]);
 
-  // const toggleOverlay = () => {
-  //   setVisible(!visible);
-  // };
-
   const toggleOverlay = () => {
     setVisible(!visible);
-    setIsTesting(true); // 用户点击开始后设置为true开始测试
   };
 
   useEffect(() => {

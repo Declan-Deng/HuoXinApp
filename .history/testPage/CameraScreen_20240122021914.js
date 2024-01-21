@@ -57,30 +57,6 @@ const CameraScreen = () => {
   //   return () => clearInterval(timer); // 组件卸载时清除定时器
   // }, []);
 
-  useEffect(() => {
-    let timer;
-    if (isTesting) {
-      // 如果开始测试，启动计时器
-      timer = setInterval(() => {
-        setProgress(currentProgress => {
-          const nextProgress = currentProgress + 0.01;
-          if (nextProgress < 1) {
-            return nextProgress;
-          } else {
-            clearInterval(timer);
-            return 1; // 直接返回1确保进度能达到100%
-          }
-        });
-      }, 600);
-    }
-
-    return () => {
-      if (timer) {
-        clearInterval(timer); // 组件卸载时清除定时器
-      }
-    };
-  }, [isTesting]);
-
   const {hasPermission, requestPermission} = useCameraPermission();
 
   const device = useCameraDevice('back');
@@ -90,13 +66,8 @@ const CameraScreen = () => {
     {fps: 60},
   ]);
 
-  // const toggleOverlay = () => {
-  //   setVisible(!visible);
-  // };
-
   const toggleOverlay = () => {
     setVisible(!visible);
-    setIsTesting(true); // 用户点击开始后设置为true开始测试
   };
 
   useEffect(() => {

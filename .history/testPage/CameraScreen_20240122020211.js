@@ -40,46 +40,20 @@ const CameraScreen = () => {
 
   const [visible, setVisible] = useState(true);
 
-  const [isTesting, setIsTesting] = useState(false);
-
-  // useEffect(() => {
-  //   const timer = setInterval(() => {
-  //     setProgress(currentProgress => {
-  //       if (currentProgress < 1) {
-  //         return currentProgress + 0.01;
-  //       } else {
-  //         clearInterval(timer);
-  //         return currentProgress;
-  //       }
-  //     });
-  //   }, 600);
-
-  //   return () => clearInterval(timer); // 组件卸载时清除定时器
-  // }, []);
-
   useEffect(() => {
-    let timer;
-    if (isTesting) {
-      // 如果开始测试，启动计时器
-      timer = setInterval(() => {
-        setProgress(currentProgress => {
-          const nextProgress = currentProgress + 0.01;
-          if (nextProgress < 1) {
-            return nextProgress;
-          } else {
-            clearInterval(timer);
-            return 1; // 直接返回1确保进度能达到100%
-          }
-        });
-      }, 600);
-    }
+    const timer = setInterval(() => {
+      setProgress(currentProgress => {
+        if (currentProgress < 1) {
+          return currentProgress + 0.01;
+        } else {
+          clearInterval(timer);
+          return currentProgress;
+        }
+      });
+    }, 600);
 
-    return () => {
-      if (timer) {
-        clearInterval(timer); // 组件卸载时清除定时器
-      }
-    };
-  }, [isTesting]);
+    return () => clearInterval(timer); // 组件卸载时清除定时器
+  }, []);
 
   const {hasPermission, requestPermission} = useCameraPermission();
 
@@ -90,13 +64,8 @@ const CameraScreen = () => {
     {fps: 60},
   ]);
 
-  // const toggleOverlay = () => {
-  //   setVisible(!visible);
-  // };
-
   const toggleOverlay = () => {
     setVisible(!visible);
-    setIsTesting(true); // 用户点击开始后设置为true开始测试
   };
 
   useEffect(() => {
@@ -112,6 +81,8 @@ const CameraScreen = () => {
   if (!device) {
     return <Text>No device</Text>;
   }
+
+  console.log('has permissions:', hasPermission);
 
   return (
     <>
@@ -139,11 +110,7 @@ const CameraScreen = () => {
 
       <View style={styles.mainContainer}>
         <BoxShadow setting={shadowOpt}>
-          <View
-            style={[
-              styles.container,
-              progress >= 0.99 && {borderColor: '#4ead4e'},
-            ]}>
+          <View style={styles.container}>
             <Camera
               device={device}
               isActive={true}
@@ -209,15 +176,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   textSecondary: {
-    marginBottom: 50,
+    marginBottom: 10,
     textAlign: 'center',
     fontSize: 17,
   },
   overlayStyle: {
+    width: 300,
+    height: 300,
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 100,
+    padding: 200,
   },
 });
 
