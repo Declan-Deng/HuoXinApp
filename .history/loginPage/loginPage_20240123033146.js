@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
 
   h2: {
-    color: '#F44336',
+    color: 'black',
     fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',

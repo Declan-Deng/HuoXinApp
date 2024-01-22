@@ -33,10 +33,10 @@ function LoginPage(props) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView>
         <View>
-          <Text style={[styles.h2]}>火星智慧心理AI检测</Text>
-          {/* <View
+          {/* <Text style={[styles.h2]}>火星智慧心理AI检测</Text> */}
+          <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Svg height="60" width="300">
+            <Svg height="60" width="400">
               <Defs>
                 <LinearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
                   <Stop offset="0%" stopColor="#FF9800" stopOpacity="1" />
@@ -54,7 +54,7 @@ function LoginPage(props) {
                 <TSpan>火星智慧心理AI检测</TSpan>
               </SvgText>
             </Svg>
-          </View> */}
+          </View>
           <Text style={[styles.h4]}>学生端</Text>
           <View style={[styles.container]}>
             <Text style={[styles.h3]}>登录</Text>
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   },
 
   h2: {
-    color: '#F44336',
+    color: 'black',
     fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
