@@ -23,7 +23,7 @@ const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
 const smallWidth = screenWidth * 0.1;
 
-const CameraScreen = props => {
+const CameraScreen = () => {
   const shadowOpt = {
     width: 800,
     height: 600,
@@ -53,10 +53,10 @@ const CameraScreen = props => {
             return nextProgress;
           } else {
             clearInterval(timer);
-            return 1;
+            return 1; // 直接返回1确保进度能达到100%
           }
         });
-      }, 60);
+      }, 600);
     }
 
     return () => {
@@ -86,31 +86,6 @@ const CameraScreen = props => {
     }
   }, [hasPermission]);
 
-  useEffect(() => {
-    let timer;
-    if (isTesting) {
-      // 如果开始测试，启动计时器
-      timer = setInterval(() => {
-        setProgress(currentProgress => {
-          const nextProgress = currentProgress + 0.01;
-          if (nextProgress < 1) {
-            return nextProgress;
-          } else {
-            clearInterval(timer);
-            setTimeout(() => {
-              props.navigation.navigate('完成界面');
-            }, 2000); // 测试完成后延迟3秒跳转
-            return 1; // 直接返回1确保进度能达到100%
-          }
-        });
-      }, 600);
-    }
-
-    return () => {
-      if (timer) clearInterval(timer);
-    };
-  }, [isTesting, props.navigation]);
-
   if (!hasPermission) {
     return <ActivityIndicator />;
   }
@@ -122,28 +97,30 @@ const CameraScreen = props => {
   return (
     <>
       <ScrollView>
-        <Text
-          style={[
-            styles.statusText,
-            {color: progress < 1 ? 'gray' : '#1abe30'},
-          ]}>
-          {isTesting ? (progress < 1 ? '测试中' : '测试完成 ✅') : ''}
-        </Text>
-        <View style={styles.progress}>
-          <LinearProgress
-            style={{
-              marginVertical: 30,
-              height: 25,
-              borderRadius: 8,
-              width: '70%',
-              elevation: 3,
-            }}
-            variant="determinate"
-            value={progress}
-            color={progress < 1 ? '#42b3fe' : '#1abe30'}
-            trackColor="#E0E0E0"
-            animation={{duration: 500}}
-          />
+        <View style={{backgroundColor: '#979797'}}>
+          <Text
+            style={[
+              styles.statusText,
+              {color: progress < 1 ? 'gray' : '#1abe30'},
+            ]}>
+            {isTesting ? (progress < 1 ? '测试中' : '测试完成 ✅') : ''}
+          </Text>
+          <View style={styles.progress}>
+            <LinearProgress
+              style={{
+                marginVertical: 30,
+                height: 25,
+                borderRadius: 8,
+                width: '70%',
+                elevation: 3,
+              }}
+              variant="determinate"
+              value={progress}
+              color={progress < 1 ? '#42b3fe' : '#1abe30'}
+              trackColor="#E0E0E0"
+              animation={{duration: 500}}
+            />
+          </View>
         </View>
 
         <View style={styles.mainContainer}>
@@ -189,7 +166,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderRadius: 15,
+    borderRadius: 10,
     overflow: 'hidden',
     borderColor: 'white',
   },
@@ -198,7 +175,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#979797',
+    backgroundColor: '#979797',
   },
 
   progress: {
@@ -212,19 +189,17 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
   textPrimary: {
     marginVertical: 20,
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 'bold',
   },
   textSecondary: {
     marginBottom: 50,
     textAlign: 'center',
     fontSize: 17,
-    fontWeight: 'bold',
   },
   overlayStyle: {
     borderRadius: 20,

@@ -53,10 +53,10 @@ const CameraScreen = props => {
             return nextProgress;
           } else {
             clearInterval(timer);
-            return 1;
+            return 1; // 直接返回1确保进度能达到100%
           }
         });
-      }, 60);
+      }, 600);
     }
 
     return () => {
@@ -85,31 +85,6 @@ const CameraScreen = props => {
       requestPermission();
     }
   }, [hasPermission]);
-
-  useEffect(() => {
-    let timer;
-    if (isTesting) {
-      // 如果开始测试，启动计时器
-      timer = setInterval(() => {
-        setProgress(currentProgress => {
-          const nextProgress = currentProgress + 0.01;
-          if (nextProgress < 1) {
-            return nextProgress;
-          } else {
-            clearInterval(timer);
-            setTimeout(() => {
-              props.navigation.navigate('完成界面');
-            }, 2000); // 测试完成后延迟3秒跳转
-            return 1; // 直接返回1确保进度能达到100%
-          }
-        });
-      }, 600);
-    }
-
-    return () => {
-      if (timer) clearInterval(timer);
-    };
-  }, [isTesting, props.navigation]);
 
   if (!hasPermission) {
     return <ActivityIndicator />;

@@ -98,7 +98,7 @@ const CameraScreen = props => {
           } else {
             clearInterval(timer);
             setTimeout(() => {
-              props.navigation.navigate('完成界面');
+              props.navigation.navigate('完成界面'); // 替换为您的目标界面名
             }, 2000); // 测试完成后延迟3秒跳转
             return 1; // 直接返回1确保进度能达到100%
           }
