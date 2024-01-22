@@ -183,11 +183,8 @@ const CameraScreen = props => {
           }}
           buttonStyle={{
             borderRadius: 5,
-            padding: 10,
-            width: 150,
-          }}
-          titleStyle={{fontWeight: 'bold', fontSize: 23}}>
-          开始检测
+          }}>
+          开始
         </Button>
       </Overlay>
     </>
@@ -234,17 +231,14 @@ const styles = StyleSheet.create({
   textPrimary: {
     marginVertical: 20,
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#181818',
-    marginBottom: 40,
   },
   textSecondary: {
     marginBottom: 50,
     textAlign: 'center',
-    fontSize: 27,
+    fontSize: 17,
     fontWeight: 'bold',
-    color: '#181818',
   },
   overlayStyle: {
     borderRadius: 20,

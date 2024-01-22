@@ -236,15 +236,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#181818',
-    marginBottom: 40,
+    color: 'black',
   },
   textSecondary: {
     marginBottom: 50,
     textAlign: 'center',
     fontSize: 27,
     fontWeight: 'bold',
-    color: '#181818',
+    color: 'black',
   },
   overlayStyle: {
     borderRadius: 20,

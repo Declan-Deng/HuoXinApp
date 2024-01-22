@@ -17,7 +17,6 @@ import {
 
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button} from '@rneui/themed';
-import LinearGradient from 'react-native-linear-gradient';
 
 // 获取屏幕尺寸
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
@@ -172,23 +171,7 @@ const CameraScreen = props => {
         <Text style={styles.textSecondary}>
           你将紧盯摄像头一分钟，请保持观看
         </Text>
-
-        <Button
-          ViewComponent={LinearGradient}
-          onPress={toggleOverlay}
-          linearGradientProps={{
-            colors: ['#FF9800', '#F44336'],
-            start: {x: 0, y: 0.5},
-            end: {x: 1, y: 0.5},
-          }}
-          buttonStyle={{
-            borderRadius: 5,
-            padding: 10,
-            width: 150,
-          }}
-          titleStyle={{fontWeight: 'bold', fontSize: 23}}>
-          开始检测
-        </Button>
+        <Button title="开始" onPress={toggleOverlay} />
       </Overlay>
     </>
   );
@@ -234,17 +217,14 @@ const styles = StyleSheet.create({
   textPrimary: {
     marginVertical: 20,
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: 'bold',
-    color: '#181818',
-    marginBottom: 40,
   },
   textSecondary: {
     marginBottom: 50,
     textAlign: 'center',
-    fontSize: 27,
+    fontSize: 17,
     fontWeight: 'bold',
-    color: '#181818',
   },
   overlayStyle: {
     borderRadius: 20,

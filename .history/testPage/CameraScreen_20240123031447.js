@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 27,
     fontWeight: 'bold',
-    color: '#181818',
+    color: 'black',
   },
   overlayStyle: {
     borderRadius: 20,

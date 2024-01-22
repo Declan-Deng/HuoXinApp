@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     fontWeight: 'bold',
-    color: '#181818',
+    color: 'black',
     marginBottom: 40,
   },
   textSecondary: {
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 27,
     fontWeight: 'bold',
-    color: '#181818',
+    color: 'black',
   },
   overlayStyle: {
     borderRadius: 20,

@@ -108,7 +108,6 @@ const styles = StyleSheet.create({
     alignItems: 'center', // 水平居中
     marginLeft: 'auto',
     marginRight: 'auto',
-    padding: 20,
   },
   buttonText: {
     color: 'white', // 文本颜色
