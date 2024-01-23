@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Icon} from '@rneui/themed';
 
 export default function FinishPage(props) {
-  const [countdown, setCountdown] = useState(2000);
+  const [countdown, setCountdown] = useState(20);
 
   useEffect(() => {
     // 设置倒计时
@@ -31,7 +30,6 @@ export default function FinishPage(props) {
 
   return (
     <View style={[styles.center]}>
-      <Icon name="cloud-done" type="material" color="green" size={50} raised />
       <Text style={[styles.h1]}>检测成功</Text>
       <TouchableOpacity
         style={styles.circleButton}
@@ -39,6 +37,7 @@ export default function FinishPage(props) {
         <Text style={styles.buttonText}>
           退出检测 {countdown > 0 ? `(${countdown}s)` : ''}
         </Text>
+        <Icon name="arrow-forward" type="material" color="white" />
       </TouchableOpacity>
     </View>
   );

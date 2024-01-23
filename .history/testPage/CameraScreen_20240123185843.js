@@ -182,7 +182,7 @@ const CameraScreen = props => {
             end: {x: 1, y: 0.5},
           }}
           buttonStyle={{
-            borderRadius: 9,
+            borderRadius: 5,
             padding: 10,
             width: 150,
           }}

@@ -69,10 +69,8 @@ export default function AgreementPage(props) {
             style={[styles.button, !agree && styles.buttonDisabled]}
             onPress={() => handleAccept(props)}
             disabled={!agree}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.buttonText}>进入检测</Text>
-              <Icon name="arrow-forward" type="material" color="white" />
-            </View>
+            <Text style={styles.buttonText}>进入检测</Text>
+            <Icon name="arrow-forward" type="material" color="white" />
           </TouchableOpacity>
         </View>
       </ScrollView>

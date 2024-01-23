@@ -87,13 +87,13 @@ function LoginPage(props) {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 40,
-    marginHorizontal: 100,
+    margin: 50,
+    // marginHorizontal: 'auto',
     paddingVertical: 50,
     borderRadius: 12,
     borderWidth: 5,
     borderColor: '#ddd',
-    padding: 20,
+    padding: 30,
     fontSize: 30,
     fontWeight: 'bold',
   },
@@ -102,15 +102,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
   },
 
   h2: {
-    color: '#c5382e',
+    color: '#F44336',
     fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 50,
+    marginTop: 90,
   },
 
   h4: {color: '#946450', fontSize: 20, textAlign: 'center', marginTop: 10},
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
 
   circleButton: {
-    borderRadius: 8,
+    borderRadius: 5, // 圆角半径
     backgroundColor: 'blue', // 背景颜色
     justifyContent: 'center', // 垂直居中
     alignItems: 'center', // 水平居中
@@ -137,12 +137,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   switchButton: {
-    borderRadius: 7,
+    borderRadius: 5,
     padding: 10,
-    margin: 7,
     justifyContent: 'center',
     backgroundColor: 'gray',
-    alignSelf: 'flex-end',
   },
   buttonText: {
     color: 'white', // 文本颜色

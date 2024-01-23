@@ -39,6 +39,7 @@ export default function FinishPage(props) {
         <Text style={styles.buttonText}>
           退出检测 {countdown > 0 ? `(${countdown}s)` : ''}
         </Text>
+        <Icon name="logout" type="material" color="white" />
       </TouchableOpacity>
     </View>
   );

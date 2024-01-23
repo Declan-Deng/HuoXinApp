@@ -9,7 +9,15 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
-import {Icon} from '@rneui/themed';
+import {Icon} from 'react-native-elements';
+// import LinearGradient from 'react-native-linear-gradient';
+// import Svg, {
+//   Defs,
+//   LinearGradient,
+//   Stop,
+//   Text as SvgText,
+//   TSpan,
+// } from 'react-native-svg';
 
 function LoginPage(props) {
   const [username, setUsername] = useState('');
@@ -26,25 +34,38 @@ function LoginPage(props) {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView>
         <View>
-          <TouchableOpacity
-            style={styles.switchButton}
-            onPress={() => doLogin(props)}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.buttonText}>切换模式</Text>
-              <Icon name="sync-alt" type="material" color="white" />
-            </View>
-          </TouchableOpacity>
-
           <Text style={[styles.h2]}>火星智慧心理AI检测</Text>
-
+          {/* <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <Svg height="60" width="300">
+              <Defs>
+                <LinearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <Stop offset="0%" stopColor="#FF9800" stopOpacity="1" />
+                  <Stop offset="100%" stopColor="#F44336" stopOpacity="1" />
+                </LinearGradient>
+              </Defs>
+              <SvgText
+                fill="url(#grad)"
+                stroke="none"
+                fontSize="30"
+                fontWeight="bold"
+                x="0"
+                y="20"
+                textAnchor="start">
+                <TSpan>火星智慧心理AI检测</TSpan>
+              </SvgText>
+            </Svg>
+          </View> */}
+          <Icon
+            name=""
+            type="material"
+            color="#517fa4" // 可以自定义颜色
+          />
           <Text style={[styles.h4]}>学生端</Text>
-          <Icon name="contact-emergency" type="material" color="#946450" />
-
           <View style={[styles.container]}>
             <Text style={[styles.h3]}>登录</Text>
             <View style={styles.inputContainer}>
-              <Icon name="face" type="material" color="#517fa4" />
-              <Text style={styles.label}>学号</Text>
+              <Text style={styles.label}>学号:</Text>
               <TextInput
                 style={[styles.itemBase]}
                 placeholder=" 请输入学号"
@@ -54,14 +75,7 @@ function LoginPage(props) {
             </View>
 
             <View style={styles.inputContainer}>
-              <Icon
-                name="password"
-                type="material"
-                color="#517fa4" // 可以自定义颜色
-              />
-
-              <Text style={styles.label}>密码</Text>
-
+              <Text style={styles.label}>密码:</Text>
               <TextInput
                 style={styles.itemBase}
                 placeholder=" 请输入密码"
@@ -74,10 +88,7 @@ function LoginPage(props) {
           <TouchableOpacity
             style={styles.circleButton}
             onPress={() => doLogin(props)}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.buttonText}>确认登录</Text>
-              <Icon name="login" type="material" color="white" />
-            </View>
+            <Text style={styles.buttonText}>确认登录</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -87,13 +98,13 @@ function LoginPage(props) {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 40,
-    marginHorizontal: 100,
+    margin: 50,
+    // marginHorizontal: 'auto',
     paddingVertical: 50,
     borderRadius: 12,
-    borderWidth: 5,
+    borderWidth: 1,
     borderColor: '#ddd',
-    padding: 20,
+    padding: 30,
     fontSize: 30,
     fontWeight: 'bold',
   },
@@ -102,15 +113,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
   },
 
   h2: {
-    color: '#c5382e',
+    color: '#F44336',
     fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 50,
+    marginTop: 90,
   },
 
   h4: {color: '#946450', fontSize: 20, textAlign: 'center', marginTop: 10},
@@ -128,21 +139,13 @@ const styles = StyleSheet.create({
   },
 
   circleButton: {
-    borderRadius: 8,
+    borderRadius: 5, // 圆角半径
     backgroundColor: 'blue', // 背景颜色
     justifyContent: 'center', // 垂直居中
     alignItems: 'center', // 水平居中
     marginLeft: 'auto',
     marginRight: 'auto',
     padding: 20,
-  },
-  switchButton: {
-    borderRadius: 7,
-    padding: 10,
-    margin: 7,
-    justifyContent: 'center',
-    backgroundColor: 'gray',
-    alignSelf: 'flex-end',
   },
   buttonText: {
     color: 'white', // 文本颜色
@@ -161,9 +164,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 100,
   },
   icon: {
-    width: 20,
-    height: 20,
-    marginRight: 10,
+    width: 20, // 根据图标的实际大小调整
+    height: 20, // 根据图标的实际大小调整
+    marginRight: 10, // 根据需要调整图标与输入框之间的间距
   },
 });
 

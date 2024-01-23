@@ -16,7 +16,7 @@ import {
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
-import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
+import {LinearProgress, Overlay, Button} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 
 // 获取屏幕尺寸
@@ -177,12 +177,12 @@ const CameraScreen = props => {
           ViewComponent={LinearGradient}
           onPress={toggleOverlay}
           linearGradientProps={{
-            colors: ['#f3900e', '#d03b30'],
+            colors: ['#FF9800', '#F44336'],
             start: {x: 0, y: 0.5},
             end: {x: 1, y: 0.5},
           }}
           buttonStyle={{
-            borderRadius: 9,
+            borderRadius: 5,
             padding: 10,
             width: 150,
           }}

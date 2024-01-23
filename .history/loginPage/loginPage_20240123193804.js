@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
 
   circleButton: {
-    borderRadius: 8,
+    borderRadius: 5, // 圆角半径
     backgroundColor: 'blue', // 背景颜色
     justifyContent: 'center', // 垂直居中
     alignItems: 'center', // 水平居中

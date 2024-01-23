@@ -177,12 +177,12 @@ const CameraScreen = props => {
           ViewComponent={LinearGradient}
           onPress={toggleOverlay}
           linearGradientProps={{
-            colors: ['#f3900e', '#d03b30'],
+            colors: ['#FF9800', '#d03b30'],
             start: {x: 0, y: 0.5},
             end: {x: 1, y: 0.5},
           }}
           buttonStyle={{
-            borderRadius: 9,
+            borderRadius: 5,
             padding: 10,
             width: 150,
           }}

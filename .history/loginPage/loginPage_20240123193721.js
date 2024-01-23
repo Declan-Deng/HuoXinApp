@@ -88,7 +88,6 @@ function LoginPage(props) {
 const styles = StyleSheet.create({
   container: {
     margin: 40,
-    marginHorizontal: 100,
     paddingVertical: 50,
     borderRadius: 12,
     borderWidth: 5,
@@ -102,7 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
   },
 
   h2: {
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
   },
 
   circleButton: {
-    borderRadius: 8,
+    borderRadius: 5, // 圆角半径
     backgroundColor: 'blue', // 背景颜色
     justifyContent: 'center', // 垂直居中
     alignItems: 'center', // 水平居中
