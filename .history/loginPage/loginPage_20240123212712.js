@@ -68,12 +68,15 @@ function LoginPage(props) {
                 placeholder=" 请输入学号"
                 value={username}
                 onChangeText={setUsername}
-                keyboardType="numeric"
               />
             </View>
 
             <View style={styles.inputContainer}>
-              <Icon name="password" type="material" color="#517fa4" />
+              <Icon
+                name="password"
+                type="material"
+                color="#517fa4" // 可以自定义颜色
+              />
 
               <Text style={styles.label}>密码</Text>
 
@@ -105,7 +108,6 @@ function LoginPage(props) {
           value={managerPassword}
           onChangeText={setManagerPassword}
           secureTextEntry={true}
-          keyboardType="numeric"
         />
         <Icon
           name="done"

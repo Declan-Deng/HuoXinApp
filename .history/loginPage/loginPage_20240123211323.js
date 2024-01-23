@@ -23,8 +23,6 @@ function LoginPage(props) {
     // alert(`用户名: ${username}, 密码: ${password}`);
 
     props.navigation.navigate('用户协议');
-    setUsername('');
-    setPassword('');
   };
 
   const doSwitch = () => {
@@ -32,13 +30,11 @@ function LoginPage(props) {
   };
 
   const checkpassword = () => {
-    if (managerPassword === '123456') {
-      // props.navigation.navigate('管理员界面');
-      setVisible(false);
+    if (managerPassword == '123456') {
+      props.navigation.navigate('管理员界面');
     } else {
       alert('密码错误');
     }
-    setManagerPassword('');
   };
 
   return (
@@ -53,7 +49,7 @@ function LoginPage(props) {
             </View>
           </TouchableOpacity>
 
-          <Text style={[styles.h2]}>火星智慧心理 AI检测</Text>
+          <Text style={[styles.h2]}>火星智慧心理AI检测</Text>
 
           <Text style={[styles.h4]}>学生端</Text>
           <Icon name="contact-emergency" type="material" color="#946450" />
@@ -68,12 +64,15 @@ function LoginPage(props) {
                 placeholder=" 请输入学号"
                 value={username}
                 onChangeText={setUsername}
-                keyboardType="numeric"
               />
             </View>
 
             <View style={styles.inputContainer}>
-              <Icon name="password" type="material" color="#517fa4" />
+              <Icon
+                name="password"
+                type="material"
+                color="#517fa4" // 可以自定义颜色
+              />
 
               <Text style={styles.label}>密码</Text>
 
@@ -102,10 +101,9 @@ function LoginPage(props) {
         <TextInput
           // style={styles.itemBase}
           placeholder=" 请输入管理员密码"
-          value={managerPassword}
-          onChangeText={setManagerPassword}
+          value={password}
+          onChangeText={setPassword}
           secureTextEntry={true}
-          keyboardType="numeric"
         />
         <Icon
           name="done"
@@ -151,7 +149,7 @@ const styles = StyleSheet.create({
   h4: {color: '#946450', fontSize: 20, textAlign: 'center', marginTop: 10},
 
   itemBase: {
-    borderRadius: 10,
+    borderRadius: 12,
     height: 50,
     fontSize: 20,
     borderWidth: 1,
