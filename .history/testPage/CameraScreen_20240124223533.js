@@ -1,5 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {
+  View,
+  Text,
+  ActivityIndicator,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+} from 'react-native';
 
 import {
   Camera,
@@ -13,9 +20,9 @@ import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 
 // 获取屏幕尺寸
-// const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
-// const smallWidth = screenWidth * 0.1;
+const smallWidth = screenWidth * 0.1;
 
 const CameraScreen = props => {
   const shadowOpt = {
@@ -70,7 +77,7 @@ const CameraScreen = props => {
 
     return () => {
       if (timer) {
-        clearInterval(timer);
+        clearInterval(timer); // 组件卸载时清除定时器
       }
     };
   }, [isTesting]);
@@ -85,8 +92,8 @@ const CameraScreen = props => {
   ]);
 
   const startTesting = () => {
-    setIsTesting(true);
-    setProgress(0);
+    setIsTesting(true); // 开始检测
+    setProgress(0); // 重置进度
   };
 
   const toggleOverlay = () => {
@@ -113,8 +120,8 @@ const CameraScreen = props => {
             clearInterval(timer);
             setTimeout(() => {
               props.navigation.navigate('完成界面');
-            }, 2000);
-            return 1;
+            }, 2000); // 测试完成后延迟3秒跳转
+            return 1; // 直接返回1确保进度能达到100%
           }
         });
       }, 600);
@@ -124,6 +131,14 @@ const CameraScreen = props => {
       if (timer) clearInterval(timer);
     };
   }, [isTesting, props.navigation]);
+
+  if (!hasPermission) {
+    return <ActivityIndicator />;
+  }
+
+  if (!device) {
+    return <Text>No device</Text>;
+  }
 
   return (
     <>

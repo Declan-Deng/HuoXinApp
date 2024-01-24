@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 
 import {
@@ -113,8 +113,8 @@ const CameraScreen = props => {
             clearInterval(timer);
             setTimeout(() => {
               props.navigation.navigate('完成界面');
-            }, 2000);
-            return 1;
+            }, 2000); // 测试完成后延迟3秒跳转
+            return 1; // 直接返回1确保进度能达到100%
           }
         });
       }, 600);
