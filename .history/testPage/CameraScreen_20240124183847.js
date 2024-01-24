@@ -130,15 +130,7 @@ const CameraScreen = props => {
           ]}>
           {isTesting ? (progress < 1 ? '测试中' : '测试完成') : ''}
         </Text>
-        {isTesting ? (
-          progress < 1 ? (
-            // 这个图标表示测试中
-            <Icon name="center-focus-weak" type="material" color="gray" />
-          ) : (
-            // 这个图标表示测试完成
-            <Icon name="check-circle-outline" type="material" color="#1abe30" />
-          )
-        ) : null}
+        <Icon></Icon>
         <View style={styles.progress}>
           <LinearProgress
             style={{

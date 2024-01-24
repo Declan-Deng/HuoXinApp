@@ -133,10 +133,10 @@ const CameraScreen = props => {
         {isTesting ? (
           progress < 1 ? (
             // 这个图标表示测试中
-            <Icon name="center-focus-weak" type="material" color="gray" />
+            <Icon name="hourglass-empty" type="material" color="gray" />
           ) : (
             // 这个图标表示测试完成
-            <Icon name="check-circle-outline" type="material" color="#1abe30" />
+            <Icon name="check-circle" type="material" color="#1abe30" />
           )
         ) : null}
         <View style={styles.progress}>

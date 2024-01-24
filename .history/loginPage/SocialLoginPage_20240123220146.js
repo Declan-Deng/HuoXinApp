@@ -10,9 +10,8 @@ import {
   ScrollView,
 } from 'react-native';
 import {Icon, Overlay} from '@rneui/themed';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function LoginPage(props) {
+export default function SocialLoginPage(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,8 +20,6 @@ function LoginPage(props) {
   const [visible, setVisible] = useState(false);
 
   const doLogin = () => {
-    // alert(`用户名: ${username}, 密码: ${password}`);
-
     props.navigation.navigate('用户协议');
     setUsername('');
     setPassword('');
@@ -32,15 +29,9 @@ function LoginPage(props) {
     setVisible(!visible);
   };
 
-  const checkpassword = async () => {
+  const checkpassword = () => {
     if (managerPassword === '123456') {
-      await AsyncStorage.setItem('currentScreen', '社会登录');
-
-      // 使用 reset 方法切换屏幕
-      props.navigation.reset({
-        index: 0,
-        routes: [{name: '社会登录'}],
-      });
+      props.navigation.navigate('社会登录');
       setVisible(false);
     } else {
       alert('密码错误');
@@ -62,11 +53,11 @@ function LoginPage(props) {
 
           <Text style={[styles.h2]}>火星智慧心理 AI检测</Text>
 
-          <Text style={[styles.h4]}>学生端</Text>
-          <Icon name="contact-emergency" type="material" color="#946450" />
+          <Text style={[styles.h4]}>社会端</Text>
+          <Icon name="groups" type="material" color="#946450" />
 
           <View style={[styles.container]}>
-            <Text style={[styles.h3]}>登录</Text>
+            <Text style={[styles.h3]}>扫码登录</Text>
             <View style={styles.inputContainer}>
               <Icon name="face" type="material" color="#517fa4" />
               <Text style={styles.label}>学号</Text>
@@ -78,27 +69,7 @@ function LoginPage(props) {
                 keyboardType="numeric"
               />
             </View>
-
-            <View style={styles.inputContainer}>
-              <Icon name="password" type="material" color="#517fa4" />
-
-              <Text style={styles.label}>密码</Text>
-
-              <TextInput
-                style={styles.itemBase}
-                placeholder=" 请输入密码"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={true}
-              />
-            </View>
           </View>
-          <TouchableOpacity style={styles.circleButton} onPress={doLogin}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.buttonText}>确认登录</Text>
-              <Icon name="login" type="material" color="white" />
-            </View>
-          </TouchableOpacity>
         </View>
       </ScrollView>
       <Overlay
@@ -227,5 +198,3 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 });
-
-export default LoginPage;

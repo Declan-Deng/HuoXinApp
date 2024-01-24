@@ -10,9 +10,8 @@ import {
   ScrollView,
 } from 'react-native';
 import {Icon, Overlay} from '@rneui/themed';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function LoginPage(props) {
+export default function SocialLoginPage(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,15 +31,9 @@ function LoginPage(props) {
     setVisible(!visible);
   };
 
-  const checkpassword = async () => {
+  const checkpassword = () => {
     if (managerPassword === '123456') {
-      await AsyncStorage.setItem('currentScreen', '社会登录');
-
-      // 使用 reset 方法切换屏幕
-      props.navigation.reset({
-        index: 0,
-        routes: [{name: '社会登录'}],
-      });
+      props.navigation.navigate('社会登录');
       setVisible(false);
     } else {
       alert('密码错误');
@@ -227,5 +220,3 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 });
-
-export default LoginPage;

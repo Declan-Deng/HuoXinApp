@@ -27,9 +27,6 @@ export default class App extends Component {
   }
 
   render() {
-    if (!this.state.isReady) {
-      return <View></View>; // 或者显示一个加载指示器
-    }
     return (
       <NavigationContainer>
         <Stack.Navigator

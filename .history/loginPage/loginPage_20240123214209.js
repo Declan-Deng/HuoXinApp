@@ -10,7 +10,6 @@ import {
   ScrollView,
 } from 'react-native';
 import {Icon, Overlay} from '@rneui/themed';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function LoginPage(props) {
   const [username, setUsername] = useState('');
@@ -32,15 +31,9 @@ function LoginPage(props) {
     setVisible(!visible);
   };
 
-  const checkpassword = async () => {
+  const checkpassword = () => {
     if (managerPassword === '123456') {
-      await AsyncStorage.setItem('currentScreen', '社会登录');
-
-      // 使用 reset 方法切换屏幕
-      props.navigation.reset({
-        index: 0,
-        routes: [{name: '社会登录'}],
-      });
+      props.navigation.navigate('界面');
       setVisible(false);
     } else {
       alert('密码错误');
@@ -108,7 +101,6 @@ function LoginPage(props) {
         <Text style={styles.overlaytext}>输入管理员密码以切换模式</Text>
         <TextInput
           // style={styles.itemBase}
-          style={[styles.overlayPassword, {textAlign: 'center'}]}
           placeholder=" 请输入管理员密码"
           value={managerPassword}
           onChangeText={setManagerPassword}
@@ -153,7 +145,7 @@ const styles = StyleSheet.create({
     fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 30,
+    marginTop: 40,
   },
 
   h4: {color: '#946450', fontSize: 20, textAlign: 'center', marginTop: 10},
@@ -200,13 +192,18 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
     fontWeight: 'bold',
-    marginLeft: 10,
+    marginLeft: 10, // 根据需要调整
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     margin: 20,
     marginHorizontal: 100,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
   },
   overlaytext: {
     fontSize: 20,
@@ -217,14 +214,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 100,
-  },
-  overlayPassword: {
-    borderRadius: 10,
-    fontSize: 20,
-    borderWidth: 1,
-    backgroundColor: 'white',
-    padding: 10,
-    margin: 20,
   },
 });
 

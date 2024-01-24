@@ -34,7 +34,13 @@ function LoginPage(props) {
 
   const checkpassword = async () => {
     if (managerPassword === '123456') {
-      await AsyncStorage.setItem('currentScreen', '社会登录');
+      // 保存当前屏幕名称到本地存储
+      try {
+        await AsyncStorage.setItem('currentScreen', '社会登录');
+      } catch (error) {
+        // 如果有错误，可以在这里处理
+        console.error('保存屏幕名称时出错', error);
+      }
 
       // 使用 reset 方法切换屏幕
       props.navigation.reset({

@@ -32,11 +32,9 @@ function LoginPage(props) {
     setVisible(!visible);
   };
 
-  const checkpassword = async () => {
+  const checkpassword = () => {
     if (managerPassword === '123456') {
-      await AsyncStorage.setItem('currentScreen', '社会登录');
-
-      // 使用 reset 方法切换屏幕
+      // 使用 reset 方法而不是 navigate
       props.navigation.reset({
         index: 0,
         routes: [{name: '社会登录'}],
