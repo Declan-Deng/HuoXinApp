@@ -46,7 +46,7 @@ export default function FinishPage(props) {
   return (
     <View style={[styles.center]}>
       <Icon name="cloud-done" type="material" color="green" size={50} raised />
-      <Text style={[styles.h1]}>检测成功，请等待检测报告返回到微信</Text>
+      <Text style={[styles.h1]}>检测成功，请等待实验报告返回</Text>
       <TouchableOpacity
         style={styles.circleButton}
         onPress={() => doLogout(props)}>

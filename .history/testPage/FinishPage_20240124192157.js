@@ -26,27 +26,14 @@ export default function FinishPage(props) {
     }
   }, [countdown, props]);
 
-  const doLogout = async props => {
-    try {
-      // 从本地存储中读取最后访问的屏幕名称
-      const lastScreen = await AsyncStorage.getItem('currentScreen');
-
-      // 如果有保存的屏幕名称，则导航到该屏幕，否则默认导航到'登录'
-      if (lastScreen) {
-        props.navigation.navigate(lastScreen);
-      } else {
-        props.navigation.navigate('社会登录');
-      }
-    } catch (error) {
-      // 如果读取出错，则默认导航到'登录'
-      props.navigation.navigate('社会登录');
-    }
+  const doLogout = props => {
+    props.navigation.navigate('登录');
   };
 
   return (
     <View style={[styles.center]}>
       <Icon name="cloud-done" type="material" color="green" size={50} raised />
-      <Text style={[styles.h1]}>检测成功，请等待检测报告返回到微信</Text>
+      <Text style={[styles.h1]}>检测成功</Text>
       <TouchableOpacity
         style={styles.circleButton}
         onPress={() => doLogout(props)}>

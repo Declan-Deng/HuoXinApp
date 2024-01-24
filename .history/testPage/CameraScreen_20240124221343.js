@@ -283,7 +283,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
-    marginBottom: 10,
   },
   textPrimary: {
     textAlign: 'center',

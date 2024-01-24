@@ -55,9 +55,9 @@ export default class App extends Component {
           />
           <Stack.Screen
             name="用户确认"
+            title="确认"
             component={AgreementPage}
             options={{
-              headerTitle: '确认信息',
               headerTitleAlign: 'center',
               cardShadowEnabled: true,
               cardOverlayEnabled: true,

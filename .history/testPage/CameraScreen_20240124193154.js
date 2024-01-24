@@ -43,23 +43,6 @@ const CameraScreen = props => {
 
   const [isTesting, setIsTesting] = useState(false);
 
-  const [countdown, setCountdown] = useState(3);
-
-  const [startCountdown, setStartCountdown] = useState(false);
-
-  useEffect(() => {
-    let timer;
-    if (startCountdown && countdown > 0) {
-      // 如果开始倒计时且倒计时大于0
-      timer = setTimeout(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-    } else if (countdown === 0) {
-      startTesting();
-    }
-    return () => clearTimeout(timer);
-  }, [countdown, startCountdown]);
-
   useEffect(() => {
     let timer;
     if (isTesting) {
@@ -93,16 +76,9 @@ const CameraScreen = props => {
     {fps: 60},
   ]);
 
-  const startTesting = () => {
-    setIsTesting(true); // 开始检测
-    setProgress(0); // 重置进度
-  };
-
   const toggleOverlay = () => {
-    // setVisible(!visible);
-    // setIsTesting(true);
-    setVisible(false);
-    setStartCountdown(true);
+    setVisible(!visible);
+    setIsTesting(true); // 用户点击开始后设置为true开始测试
   };
 
   useEffect(() => {
@@ -152,23 +128,16 @@ const CameraScreen = props => {
             styles.statusText,
             {color: progress < 1 ? 'gray' : '#1abe30'},
           ]}>
-          {startCountdown &&
-            (countdown > 0
-              ? `检测开始倒计时：${countdown}`
-              : isTesting
-              ? progress < 1
-                ? '测试中'
-                : '测试完成'
-              : '')}
+          {isTesting ? (progress < 1 ? '检测中' : '检测完成') : ''}
         </Text>
         {isTesting ? (
           progress < 1 ? (
+            // 这个图标表示测试中
             <Icon name="center-focus-weak" type="material" color="gray" />
           ) : (
+            // 这个图标表示测试完成
             <Icon name="check-circle-outline" type="material" color="#1abe30" />
           )
-        ) : countdown > 0 ? (
-          <Icon name="center-focus-weak" type="material" color="gray" />
         ) : null}
         <View style={styles.progress}>
           <LinearProgress
@@ -216,7 +185,7 @@ const CameraScreen = props => {
           }}>
           <Text style={styles.textPrimary}>注意事项</Text>
           <Icon
-            name="error-outline"
+            name="report-gmailerrorred"
             type="material"
             color="#d03b30"
             size={30}
@@ -283,7 +252,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
-    marginBottom: 10,
   },
   textPrimary: {
     textAlign: 'center',

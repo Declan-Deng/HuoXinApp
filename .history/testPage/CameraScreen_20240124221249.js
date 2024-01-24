@@ -163,11 +163,14 @@ const CameraScreen = props => {
         </Text>
         {isTesting ? (
           progress < 1 ? (
+            // 测试中，显示这个图标
             <Icon name="center-focus-weak" type="material" color="gray" />
           ) : (
+            // 测试完成，显示另一个图标
             <Icon name="check-circle-outline" type="material" color="#1abe30" />
           )
         ) : countdown > 0 ? (
+          // 倒计时进行中，也显示这个图标
           <Icon name="center-focus-weak" type="material" color="gray" />
         ) : null}
         <View style={styles.progress}>
@@ -283,7 +286,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
-    marginBottom: 10,
   },
   textPrimary: {
     textAlign: 'center',

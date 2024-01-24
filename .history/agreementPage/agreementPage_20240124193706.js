@@ -8,16 +8,10 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {Checkbox} from '@ant-design/react-native';
-import {Icon, Avatar, Overlay} from '@rneui/themed';
+import {Icon} from '@rneui/themed';
 
 export default function AgreementPage(props) {
   const [agree, setAgree] = useState(true);
-
-  const [visible, setVisible] = useState(false);
-
-  const doSwitch = () => {
-    setVisible(!visible);
-  };
 
   const handleAccept = props => {
     // 处理用户接受协议的逻辑
@@ -29,49 +23,8 @@ export default function AgreementPage(props) {
     <>
       <ScrollView>
         <View>
-          <View style={[styles.container]}>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-around',
-                marginVertical: 40,
-              }}>
-              <Avatar
-                size={120}
-                rounded
-                source={{uri: 'https://randomuser.me/api/portraits/men/36.jpg'}}
-              />
-            </View>
-            <Text style={[styles.userText]}>姓名：</Text>
-            <Text style={[styles.userText]}>学号：</Text>
-          </View>
-          <View style={styles.checkboxContainer}>
-            <Checkbox checked={agree} onChange={() => setAgree(!agree)}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text>我已阅读并同意</Text>
-                <Text style={{color: 'blue'}} onPress={doSwitch}>
-                  用户协议
-                </Text>
-              </View>
-            </Checkbox>
-          </View>
-
-          <TouchableOpacity
-            style={[styles.button, !agree && styles.buttonDisabled]}
-            onPress={() => handleAccept(props)}
-            disabled={!agree}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.buttonText}>进入检测</Text>
-              <Icon name="arrow-forward" type="material" color="white" />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <Overlay
-          isVisible={visible}
-          onBackdropPress={doSwitch}
-          overlayStyle={styles.overlayStyle}>
-          <Text style={[styles.h2]}>用户协议</Text>
-          <View style={styles.textContainer}>
+          {/* <Text style={[styles.h2]}>协议声明</Text> */}
+          {/* <View style={styles.textContainer}>
             <ScrollView>
               <Text>
                 <Text style={{fontWeight: 'bold'}}>AI心理检测应用用户协议</Text>
@@ -105,16 +58,26 @@ export default function AgreementPage(props) {
                 用户继续使用本应用服务将视为接受修改后的协议。
               </Text>
             </ScrollView>
+          </View> */}
+
+          <Image></Image>
+
+          <View style={styles.checkboxContainer}>
+            <Checkbox checked={agree} onChange={() => setAgree(!agree)}>
+              我已阅读并同意以上协议
+            </Checkbox>
           </View>
-          <Icon
-            name="close"
-            type="material"
-            color="green"
-            size={20}
-            raised
-            onPress={doSwitch}
-          />
-        </Overlay>
+
+          <TouchableOpacity
+            style={[styles.button, !agree && styles.buttonDisabled]}
+            onPress={() => handleAccept(props)}
+            disabled={!agree}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.buttonText}>进入检测</Text>
+              <Icon name="arrow-forward" type="material" color="white" />
+            </View>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </>
   );
@@ -123,17 +86,10 @@ export default function AgreementPage(props) {
 const styles = StyleSheet.create({
   h2: {
     color: 'black',
-    fontSize: 43,
+    fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
-  },
-
-  userText: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginVertical: 10,
+    marginTop: 90,
   },
 
   textContainer: {
@@ -143,7 +99,7 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 35, // 外边距
     marginHorizontal: 100, // 垂直外边距
-    height: 400,
+    height: 300,
   },
 
   button: {
@@ -168,25 +124,7 @@ const styles = StyleSheet.create({
   },
 
   checkboxContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    margin: 40,
-    marginHorizontal: 150,
-    paddingVertical: 50,
-    borderRadius: 12,
-    borderWidth: 5,
-    borderColor: '#ddd',
-    padding: 20,
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  overlayStyle: {
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 50,
-    width: 1200,
+    justifyContent: 'center', // 垂直居中
+    alignItems: 'center', // 水平居中
   },
 });

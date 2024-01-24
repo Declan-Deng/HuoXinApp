@@ -102,7 +102,7 @@ const CameraScreen = props => {
     // setVisible(!visible);
     // setIsTesting(true);
     setVisible(false);
-    setStartCountdown(true);
+    setCountdown(3);
   };
 
   useEffect(() => {
@@ -147,28 +147,28 @@ const CameraScreen = props => {
   return (
     <>
       <ScrollView>
-        <Text
+        {/* <Text
           style={[
             styles.statusText,
             {color: progress < 1 ? 'gray' : '#1abe30'},
           ]}>
-          {startCountdown &&
-            (countdown > 0
-              ? `检测开始倒计时：${countdown}`
-              : isTesting
-              ? progress < 1
-                ? '测试中'
-                : '测试完成'
-              : '')}
-        </Text>
+          {isTesting ? (progress < 1 ? '检测中' : '检测完成') : ''}
+        </Text> */}
+        {countdown > 0 ? (
+          <Text style={styles.statusText}>{countdown}</Text> // 显示倒计时
+        ) : isTesting ? (
+          <Text style={styles.statusText}>
+            {progress < 1 ? '检测中' : '检测完成'}
+          </Text>
+        ) : null}
         {isTesting ? (
           progress < 1 ? (
+            // 这个图标表示测试中
             <Icon name="center-focus-weak" type="material" color="gray" />
           ) : (
+            // 这个图标表示测试完成
             <Icon name="check-circle-outline" type="material" color="#1abe30" />
           )
-        ) : countdown > 0 ? (
-          <Icon name="center-focus-weak" type="material" color="gray" />
         ) : null}
         <View style={styles.progress}>
           <LinearProgress
@@ -283,7 +283,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
-    marginBottom: 10,
   },
   textPrimary: {
     textAlign: 'center',

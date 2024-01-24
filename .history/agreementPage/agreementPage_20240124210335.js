@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 35, // 外边距
     marginHorizontal: 100, // 垂直外边距
-    height: 400,
+    height: 300,
   },
 
   button: {

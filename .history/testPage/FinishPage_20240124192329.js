@@ -26,6 +26,10 @@ export default function FinishPage(props) {
     }
   }, [countdown, props]);
 
+  // const doLogout = props => {
+  //   props.navigation.navigate('登录');
+  // };
+
   const doLogout = async props => {
     try {
       // 从本地存储中读取最后访问的屏幕名称
@@ -46,7 +50,7 @@ export default function FinishPage(props) {
   return (
     <View style={[styles.center]}>
       <Icon name="cloud-done" type="material" color="green" size={50} raised />
-      <Text style={[styles.h1]}>检测成功，请等待检测报告返回到微信</Text>
+      <Text style={[styles.h1]}>检测成功</Text>
       <TouchableOpacity
         style={styles.circleButton}
         onPress={() => doLogout(props)}>

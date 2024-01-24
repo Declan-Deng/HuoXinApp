@@ -70,7 +70,7 @@ export default function AgreementPage(props) {
           isVisible={visible}
           onBackdropPress={doSwitch}
           overlayStyle={styles.overlayStyle}>
-          <Text style={[styles.h2]}>用户协议</Text>
+          <Text style={[styles.h2]}>协议声明</Text>
           <View style={styles.textContainer}>
             <ScrollView>
               <Text>
@@ -123,9 +123,10 @@ export default function AgreementPage(props) {
 const styles = StyleSheet.create({
   h2: {
     color: 'black',
-    fontSize: 43,
+    fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginTop: 20,
   },
 
   userText: {
@@ -143,7 +144,7 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 35, // 外边距
     marginHorizontal: 100, // 垂直外边距
-    height: 400,
+    height: 300,
   },
 
   button: {
