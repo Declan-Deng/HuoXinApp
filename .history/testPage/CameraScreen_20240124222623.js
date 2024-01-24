@@ -238,7 +238,7 @@ const CameraScreen = props => {
             borderRadius: 9,
             padding: 10,
             width: 150,
-            height: 70,
+            height: 50,
           }}
           titleStyle={{fontWeight: 'bold', fontSize: 23}}>
           开始检测

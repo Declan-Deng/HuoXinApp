@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 5,
     borderColor: '#ddd',
-    padding: 20,
+
     fontWeight: 'bold',
   },
   h3: {

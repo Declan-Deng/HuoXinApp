@@ -131,11 +131,12 @@ const styles = StyleSheet.create({
   container: {
     margin: 40,
     marginHorizontal: 100,
-    paddingVertical: 40,
+    paddingVertical: 50,
     borderRadius: 12,
     borderWidth: 5,
     borderColor: '#ddd',
     padding: 20,
+    // fontSize: 30,
     fontWeight: 'bold',
   },
   h3: {
