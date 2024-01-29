@@ -5,6 +5,7 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  useCameraFormat,
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
@@ -50,6 +51,11 @@ const CameraScreen = props => {
 
   const device = useCameraDevice('front');
 
+  const format = useCameraFormat(device, [
+    {videoResolution: {width: 3048, height: 2160}},
+    {fps: 60},
+  ]);
+
   const startTesting = () => {
     setIsTesting(true);
     setProgress(0);
@@ -69,6 +75,7 @@ const CameraScreen = props => {
   useEffect(() => {
     let timer;
     if (isTesting) {
+      // 如果开始测试，启动计时器
       timer = setInterval(() => {
         setProgress(currentProgress => {
           const nextProgress = currentProgress + 0.01;
@@ -243,13 +250,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 100,
-  },
-  linearProgress: {
-    marginVertical: 30,
-    height: 25,
-    borderRadius: 8,
-    width: '70%',
-    elevation: 3,
   },
 });
 

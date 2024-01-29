@@ -1,15 +1,44 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  PermissionsAndroid,
+  Platform,
+} from 'react-native';
+
+import CameraRoll from '@react-native-camera-roll/camera-roll';
 
 import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  useCameraFormat,
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+
+// // 这个函数用于检查和请求存储权限
+// async function hasStoragePermission() {
+//   const permission =
+//     Platform.OS === 'android' && Platform.Version >= 23
+//       ? PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+//       : null;
+
+//   if (permission) {
+//     const hasPermission = await PermissionsAndroid.check(permission);
+//     if (!hasPermission) {
+//       const status = await PermissionsAndroid.request(permission);
+//       return status === PermissionsAndroid.RESULTS.GRANTED;
+//     }
+//     return hasPermission;
+//   }
+//   return true;
+// }
 
 const CameraScreen = props => {
   const shadowOpt = {
@@ -24,6 +53,10 @@ const CameraScreen = props => {
     style: {marginVertical: 5},
   };
 
+  const cameraRef = useRef(null);
+
+  const device = useCameraDevice('back');
+
   const [progress, setProgress] = useState(0);
 
   const [visible, setVisible] = useState(true);
@@ -34,21 +67,90 @@ const CameraScreen = props => {
 
   const [startCountdown, setStartCountdown] = useState(false);
 
-  useEffect(() => {
-    let timer;
-    if (startCountdown && countdown > 0) {
-      timer = setTimeout(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
-    } else if (countdown === 0) {
-      startTesting();
-    }
-    return () => clearTimeout(timer);
-  }, [countdown, startCountdown]);
-
   const {hasPermission, requestPermission} = useCameraPermission();
 
-  const device = useCameraDevice('front');
+  // const format = useCameraFormat(device, [
+  //   {videoResolution: {width: 3048, height: 2160}},
+  //   {fps: 60},
+  // ]);
+
+  async function hasAndroidPermission() {
+    const getCheckPermissionPromise = () => {
+      if (Platform.Version >= 33) {
+        return Promise.all([
+          PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+          ),
+          PermissionsAndroid.check(
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+          ),
+        ]).then(
+          ([hasReadMediaImagesPermission, hasReadMediaVideoPermission]) =>
+            hasReadMediaImagesPermission && hasReadMediaVideoPermission,
+        );
+      } else {
+        return PermissionsAndroid.check(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        );
+      }
+    };
+
+    const hasPermission = await getCheckPermissionPromise();
+    if (hasPermission) {
+      return true;
+    }
+    const getRequestPermissionPromise = () => {
+      if (Platform.Version >= 33) {
+        return PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+          PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+        ]).then(
+          statuses =>
+            statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] ===
+              PermissionsAndroid.RESULTS.GRANTED &&
+            statuses[PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO] ===
+              PermissionsAndroid.RESULTS.GRANTED,
+        );
+      } else {
+        return PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        ).then(status => status === PermissionsAndroid.RESULTS.GRANTED);
+      }
+    };
+
+    return await getRequestPermissionPromise();
+  }
+
+  const startRecording = async () => {
+    // 检查和请求存储权限
+    if (Platform.OS === 'android' && !(await hasAndroidPermission())) {
+      console.log('Required permissions not granted');
+      return;
+    }
+
+    if (cameraRef.current) {
+      cameraRef.current.startRecording({
+        onRecordingFinished: async video => {
+          try {
+            // 保存视频到相册
+            await CameraRoll.save(`file://${video.path}`, {type: 'video'});
+            console.log('Video saved to Camera Roll');
+
+            // 可以在这里执行其他操作，比如更新状态或导航
+          } catch (error) {
+            console.error('Error saving video:', error);
+          }
+        },
+        onRecordingError: error => console.error(error),
+      });
+    }
+  };
+
+  const stopRecording = async () => {
+    if (cameraRef.current) {
+      await cameraRef.current.stopRecording();
+    }
+  };
 
   const startTesting = () => {
     setIsTesting(true);
@@ -68,6 +170,19 @@ const CameraScreen = props => {
 
   useEffect(() => {
     let timer;
+    if (startCountdown && countdown > 0) {
+      timer = setTimeout(() => {
+        setCountdown(countdown - 1);
+      }, 1000);
+    } else if (countdown === 0) {
+      startRecording();
+      startTesting();
+    }
+    return () => clearTimeout(timer);
+  }, [countdown, startCountdown]);
+
+  useEffect(() => {
+    let timer;
     if (isTesting) {
       timer = setInterval(() => {
         setProgress(currentProgress => {
@@ -77,14 +192,14 @@ const CameraScreen = props => {
           } else {
             clearInterval(timer);
             setTimeout(() => {
+              stopRecording();
               props.navigation.navigate('完成界面');
             }, 2000);
             return 1;
           }
         });
-      }, 600);
+      }, 60);
     }
-
     return () => {
       if (timer) clearInterval(timer);
     };
@@ -118,7 +233,13 @@ const CameraScreen = props => {
         ) : null}
         <View style={styles.progress}>
           <LinearProgress
-            style={styles.linearProgress}
+            style={{
+              marginVertical: 30,
+              height: 25,
+              borderRadius: 8,
+              width: '70%',
+              elevation: 3,
+            }}
             variant="determinate"
             value={progress}
             color={progress < 1 ? '#42b3fe' : '#1abe30'}
@@ -135,10 +256,13 @@ const CameraScreen = props => {
                 progress >= 0.99 && {borderColor: '#4ead4e'},
               ]}>
               <Camera
+                ref={cameraRef}
                 device={device}
                 isActive={true}
                 style={styles.camera}
                 orientation="landscape-left"
+                video={true}
+                audio={true}
               />
             </View>
           </BoxShadow>
@@ -243,13 +367,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 100,
-  },
-  linearProgress: {
-    marginVertical: 30,
-    height: 25,
-    borderRadius: 8,
-    width: '70%',
-    elevation: 3,
   },
 });
 

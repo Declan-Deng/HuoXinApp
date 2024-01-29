@@ -5,6 +5,7 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  useCameraFormat,
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
@@ -30,25 +31,28 @@ const CameraScreen = props => {
 
   const [isTesting, setIsTesting] = useState(false);
 
-  const [countdown, setCountdown] = useState(3);
-
-  const [startCountdown, setStartCountdown] = useState(false);
+  const [countdown, setCountdown] = useState({value: 3, active: false});
 
   useEffect(() => {
     let timer;
-    if (startCountdown && countdown > 0) {
+    if (countdown.active && countdown.value > 0) {
       timer = setTimeout(() => {
-        setCountdown(countdown - 1);
+        setCountdown(countdown.value - 1);
       }, 1000);
-    } else if (countdown === 0) {
+    } else if (countdown.value === 0) {
       startTesting();
     }
     return () => clearTimeout(timer);
-  }, [countdown, startCountdown]);
+  }, [countdown]);
 
   const {hasPermission, requestPermission} = useCameraPermission();
 
   const device = useCameraDevice('front');
+
+  const format = useCameraFormat(device, [
+    {videoResolution: {width: 3048, height: 2160}},
+    {fps: 60},
+  ]);
 
   const startTesting = () => {
     setIsTesting(true);
@@ -57,7 +61,7 @@ const CameraScreen = props => {
 
   const toggleOverlay = () => {
     setVisible(false);
-    setStartCountdown(true);
+    setCountdown({value: 3, active: true});
   };
 
   useEffect(() => {
@@ -69,6 +73,7 @@ const CameraScreen = props => {
   useEffect(() => {
     let timer;
     if (isTesting) {
+      // 如果开始测试，启动计时器
       timer = setInterval(() => {
         setProgress(currentProgress => {
           const nextProgress = currentProgress + 0.01;
@@ -98,7 +103,7 @@ const CameraScreen = props => {
             styles.statusText,
             {color: progress < 1 ? 'gray' : '#1abe30'},
           ]}>
-          {startCountdown &&
+          {countdown.active &&
             (countdown > 0
               ? `检测开始倒计时：${countdown}`
               : isTesting

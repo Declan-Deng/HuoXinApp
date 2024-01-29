@@ -1,15 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 
 import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  useCameraFormat,
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+
+// 获取屏幕尺寸
+// const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+
+// const smallWidth = screenWidth * 0.1;
 
 const CameraScreen = props => {
   const shadowOpt = {
@@ -46,9 +52,37 @@ const CameraScreen = props => {
     return () => clearTimeout(timer);
   }, [countdown, startCountdown]);
 
+  useEffect(() => {
+    let timer;
+    if (isTesting) {
+      timer = setInterval(() => {
+        setProgress(currentProgress => {
+          const nextProgress = currentProgress + 0.01;
+          if (nextProgress < 1) {
+            return nextProgress;
+          } else {
+            clearInterval(timer);
+            return 1;
+          }
+        });
+      }, 6000);
+    }
+
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [isTesting]);
+
   const {hasPermission, requestPermission} = useCameraPermission();
 
   const device = useCameraDevice('front');
+
+  const format = useCameraFormat(device, [
+    {videoResolution: {width: 3048, height: 2160}},
+    {fps: 60},
+  ]);
 
   const startTesting = () => {
     setIsTesting(true);
@@ -69,6 +103,7 @@ const CameraScreen = props => {
   useEffect(() => {
     let timer;
     if (isTesting) {
+      // 如果开始测试，启动计时器
       timer = setInterval(() => {
         setProgress(currentProgress => {
           const nextProgress = currentProgress + 0.01;
@@ -118,7 +153,13 @@ const CameraScreen = props => {
         ) : null}
         <View style={styles.progress}>
           <LinearProgress
-            style={styles.linearProgress}
+            style={{
+              marginVertical: 30,
+              height: 25,
+              borderRadius: 8,
+              width: '70%',
+              elevation: 3,
+            }}
             variant="determinate"
             value={progress}
             color={progress < 1 ? '#42b3fe' : '#1abe30'}
@@ -243,13 +284,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 100,
-  },
-  linearProgress: {
-    marginVertical: 30,
-    height: 25,
-    borderRadius: 8,
-    width: '70%',
-    elevation: 3,
   },
 });
 

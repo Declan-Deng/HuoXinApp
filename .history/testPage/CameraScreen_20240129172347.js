@@ -1,15 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
 
 import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  useCameraFormat,
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+
+// 获取屏幕尺寸
+// const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+
+// const smallWidth = screenWidth * 0.1;
 
 const CameraScreen = props => {
   const shadowOpt = {
@@ -69,6 +75,7 @@ const CameraScreen = props => {
   useEffect(() => {
     let timer;
     if (isTesting) {
+      // 如果开始测试，启动计时器
       timer = setInterval(() => {
         setProgress(currentProgress => {
           const nextProgress = currentProgress + 0.01;

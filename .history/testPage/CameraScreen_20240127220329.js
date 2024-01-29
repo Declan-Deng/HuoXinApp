@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {View, Text, StyleSheet, Dimensions, ScrollView} from 'react-native';
+import CameraRoll from '@react-native-camera-roll/camera-roll';
 
 import {
   Camera,
   useCameraDevice,
   useCameraPermission,
+  useCameraFormat,
 } from 'react-native-vision-camera';
 
 import {BoxShadow} from 'react-native-shadow';
@@ -23,6 +25,8 @@ const CameraScreen = props => {
     y: 2,
     style: {marginVertical: 5},
   };
+
+  const cameraRef = useRef(null);
 
   const [progress, setProgress] = useState(0);
 
@@ -50,6 +54,11 @@ const CameraScreen = props => {
 
   const device = useCameraDevice('front');
 
+  const format = useCameraFormat(device, [
+    {videoResolution: {width: 3048, height: 2160}},
+    {fps: 60},
+  ]);
+
   const startTesting = () => {
     setIsTesting(true);
     setProgress(0);
@@ -69,6 +78,7 @@ const CameraScreen = props => {
   useEffect(() => {
     let timer;
     if (isTesting) {
+      // 如果开始测试，启动计时器
       timer = setInterval(() => {
         setProgress(currentProgress => {
           const nextProgress = currentProgress + 0.01;
@@ -82,7 +92,7 @@ const CameraScreen = props => {
             return 1;
           }
         });
-      }, 600);
+      }, 60000);
     }
 
     return () => {
@@ -118,7 +128,13 @@ const CameraScreen = props => {
         ) : null}
         <View style={styles.progress}>
           <LinearProgress
-            style={styles.linearProgress}
+            style={{
+              marginVertical: 30,
+              height: 25,
+              borderRadius: 8,
+              width: '70%',
+              elevation: 3,
+            }}
             variant="determinate"
             value={progress}
             color={progress < 1 ? '#42b3fe' : '#1abe30'}
@@ -139,6 +155,8 @@ const CameraScreen = props => {
                 isActive={true}
                 style={styles.camera}
                 orientation="landscape-left"
+                video={true}
+                audio={true}
               />
             </View>
           </BoxShadow>
@@ -243,13 +261,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 100,
-  },
-  linearProgress: {
-    marginVertical: 30,
-    height: 25,
-    borderRadius: 8,
-    width: '70%',
-    elevation: 3,
   },
 });
 
