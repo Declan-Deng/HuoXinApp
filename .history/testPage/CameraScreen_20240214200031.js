@@ -4,12 +4,12 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
-  useDeviceRotationSensor,
 } from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDeviceRotationSensor} from './useDeviceRotationSensor';
 
 const CameraScreen = props => {
   const shadowOpt = {
@@ -39,6 +39,21 @@ const CameraScreen = props => {
   const device = useCameraDevice('front');
 
   const camera = useRef(null);
+
+  const setCameraOrientation = orientation => {
+    console.log(`Setting camera orientation to: ${orientation}`);
+    // 在这里更新相机的朝向
+    // 注意：你需要实现这个函数的内部逻辑，以真正改变相机组件的朝向
+  };
+
+  // 使用自定义钩子监听设备旋转
+  useDeviceRotationSensor(rotation => {
+    // 根据设备旋转更新相机朝向的逻辑
+    if (rotation === 'top') setCameraOrientation('portrait');
+    if (rotation === 'right') setCameraOrientation('landscapeLeft');
+    if (rotation === 'down') setCameraOrientation('portraitUpsideDown');
+    if (rotation === 'left') setCameraOrientation('landscapeRight');
+  });
 
   const startTesting = () => {
     setIsTesting(true);

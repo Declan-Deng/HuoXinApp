@@ -28,11 +28,6 @@ function LoginPage(props) {
   // 新增设备名状态
   const [deviceName, setDeviceName] = useState('');
 
-  // 定义状态和更新函数
-  const [isConnected, setIsConnected] = useState(false);
-
-  let connectionStatusMessage = isConnected ? '设备连接成功' : '设备未连接';
-
   const doLogin = () => {
     // alert(`用户名: ${username}, 密码: ${password}`);
 
@@ -64,10 +59,7 @@ function LoginPage(props) {
   // 新增的 handlePress 函数
   const handlePress = () => {
     console.log('发起连接请求');
-    connectToService(null, () => {
-      // 成功回调
-      setIsConnected(true);
-    });
+    connectToService(null);
   };
 
   useEffect(() => {
@@ -106,10 +98,9 @@ function LoginPage(props) {
               justifyContent: 'space-between',
             }}>
             <Text style={styles.deviceName}>设备名: {deviceName}</Text>
-            <Text style={{marginTop: 10}}>{connectionStatusMessage}</Text>
             <TouchableOpacity style={styles.switchButton} onPress={doSwitch}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.buttonTextS}>管理设备</Text>
+                <Text style={styles.buttonTextS}>切换模式</Text>
                 <Icon name="sync-alt" type="material" color="white" />
               </View>
             </TouchableOpacity>
@@ -152,17 +143,18 @@ function LoginPage(props) {
               <Text style={styles.buttonText}>确认登录</Text>
             </View>
           </TouchableOpacity>
+
+          {/* 新增的按钮 */}
+          <TouchableOpacity onPress={handlePress} style={styles.connectButton}>
+            <Text style={styles.buttonText}>启用设备</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <Overlay
         isVisible={visible}
         onBackdropPress={doSwitch}
         overlayStyle={styles.overlayStyle}>
-        {/* 新增的按钮 */}
-        <TouchableOpacity onPress={handlePress} style={styles.connectButton}>
-          <Text style={styles.buttonText}>启用设备</Text>
-        </TouchableOpacity>
-        <Text style={styles.overlaytext}>输入管理员密码以管理设备</Text>
+        <Text style={styles.overlaytext}>输入管理员密码以切换模式</Text>
         <TextInput
           // style={styles.itemBase}
           style={[styles.overlayPassword, {textAlign: 'center'}]}
@@ -289,9 +281,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#517fa4', // 可以根据您的设计调整颜色
     justifyContent: 'center',
     alignItems: 'center',
-    height: 40, // 根据需要调整高度
-    marginBottom: 50, // 为按钮添加一些垂直外边距
-    width: 120,
+    height: 50, // 根据需要调整高度
+    marginVertical: 10, // 为按钮添加一些垂直外边距
   },
 });
 

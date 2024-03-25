@@ -5,11 +5,14 @@ import {
   useCameraDevice,
   useCameraPermission,
   useDeviceRotationSensor,
+  FrameProcessor,
+  specialRenderers,
 } from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+import {GoogleFaceDetector} from 'react-native-google-vision-api';
 
 const CameraScreen = props => {
   const shadowOpt = {

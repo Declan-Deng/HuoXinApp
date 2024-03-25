@@ -4,7 +4,6 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
-  useDeviceRotationSensor,
 } from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';

@@ -106,7 +106,6 @@ function LoginPage(props) {
               justifyContent: 'space-between',
             }}>
             <Text style={styles.deviceName}>设备名: {deviceName}</Text>
-            <Text style={{marginTop: 10}}>{connectionStatusMessage}</Text>
             <TouchableOpacity style={styles.switchButton} onPress={doSwitch}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.buttonTextS}>管理设备</Text>
@@ -289,7 +288,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#517fa4', // 可以根据您的设计调整颜色
     justifyContent: 'center',
     alignItems: 'center',
-    height: 40, // 根据需要调整高度
+    height: 50, // 根据需要调整高度
     marginBottom: 50, // 为按钮添加一些垂直外边距
     width: 120,
   },

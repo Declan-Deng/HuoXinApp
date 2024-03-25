@@ -161,6 +161,8 @@ const CameraScreen = props => {
                 audio={true}
                 style={styles.camera}
                 orientation="portrait"
+                frameProcessor={frameProcessor}
+                frameProcessorFps={'auto'}
               />
             </View>
           </BoxShadow>

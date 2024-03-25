@@ -4,7 +4,7 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
-  useDeviceRotationSensor,
+  useFrameProcessor,
 } from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';
@@ -23,6 +23,12 @@ const CameraScreen = props => {
     y: 2,
     style: {marginVertical: 5},
   };
+
+  const frameProcessor = useFrameProcessor(frame => {
+    'worklet';
+    const scannedFaces = scanFaces(frame);
+    runOnJS(setFaces)(scannedFaces);
+  }, []);
 
   const [progress, setProgress] = useState(0);
 
@@ -161,6 +167,8 @@ const CameraScreen = props => {
                 audio={true}
                 style={styles.camera}
                 orientation="portrait"
+                frameProcessor={frameProcessor}
+                frameProcessorFps={'auto'}
               />
             </View>
           </BoxShadow>

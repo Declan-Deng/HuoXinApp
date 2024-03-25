@@ -4,12 +4,12 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
-  useDeviceRotationSensor,
 } from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDeviceRotationSensor} from './useDeviceRotationSensor';
 
 const CameraScreen = props => {
   const shadowOpt = {

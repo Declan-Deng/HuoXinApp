@@ -3,13 +3,15 @@ import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {
   Camera,
   useCameraDevice,
-  useCameraPermission,
-  useDeviceRotationSensor,
+  // useCameraPermission,
+  useFrameProcessor,
 } from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
+import {scanFaces, Face} from 'vision-camera-face-detector';
+import {runOnJS} from 'react-native-reanimated';
 
 const CameraScreen = props => {
   const shadowOpt = {
@@ -24,6 +26,15 @@ const CameraScreen = props => {
     style: {marginVertical: 5},
   };
 
+  const frameProcessor = useFrameProcessor(frame => {
+    'worklet';
+    const scannedFaces = scanFaces(frame);
+    runOnJS(setFaces)(scannedFaces);
+  }, []);
+
+  const [faces, setFaces] = useState([]);
+  const [msg, setMsg] = useState(null);
+
   const [progress, setProgress] = useState(0);
 
   const [visible, setVisible] = useState(true);
@@ -34,7 +45,9 @@ const CameraScreen = props => {
 
   const [startCountdown, setStartCountdown] = useState(false);
 
-  const {hasPermission, requestPermission} = useCameraPermission();
+  const [hasPermission, setHasPermission] = useState(false);
+
+  // const {hasPermission, requestPermission} = useCameraPermission();
 
   const device = useCameraDevice('front');
 
@@ -57,6 +70,60 @@ const CameraScreen = props => {
       console.error('Error stopping recording: ', error);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      const status = await Camera.requestCameraPermission();
+      setHasPermission(status === 'authorized');
+    })();
+  }, []);
+
+  useEffect(() => {
+    let facesArr = [];
+    facesArr = faces;
+    // faces为帧处理器获得到的人脸图片，从而进行人脸检测处理
+    if (facesArr.length > 0) {
+      let face = facesArr[0];
+      if (JSON.stringify(face.contours) == '{}') {
+        setMsg('人脸信息不全');
+      } else {
+        if (
+          face.leftEyeOpenProbability == 1 &&
+          face.rightEyeOpenProbability == 1 &&
+          face.pitchAngle == 0 &&
+          face.rollAngle == 0
+        ) {
+          setMsg('面部遮挡');
+        } else {
+          if (
+            face.leftEyeOpenProbability < 0.8 &&
+            face.rightEyeOpenProbability < 0.8
+          ) {
+            setMsg('请睁眼');
+          } else {
+            if (
+              !(
+                Math.abs(face.pitchAngle) < 6 &&
+                Math.abs(face.rollAngle) < 6 &&
+                Math.abs(face.yawAngle) <= 6
+              )
+            ) {
+              setMsg('请正面朝向屏幕');
+            } else {
+              // //关闭相机
+              // setIsActiveVal(false);
+              // //拍摄照片
+              // takePicture()
+              //   .then(res => {
+              //     console.log('成功', res);
+              //   })
+              //   .catch();
+            }
+          }
+        }
+      }
+    }
+  }, [faces]);
 
   useEffect(() => {
     let timer;
@@ -161,6 +228,8 @@ const CameraScreen = props => {
                 audio={true}
                 style={styles.camera}
                 orientation="portrait"
+                frameProcessor={frameProcessor}
+                frameProcessorFps={'auto'}
               />
             </View>
           </BoxShadow>

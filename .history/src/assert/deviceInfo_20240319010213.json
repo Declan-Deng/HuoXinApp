@@ -1,0 +1,7 @@
+{
+  "productKey": "k0u11KHBPC0",
+  "deviceSecret": "829dc175fbc8664a68d9007102bf08f4",
+  "regionId": "cn-shanghai",
+  "instanceId": "iot-06z00fk4lm2hiv3",
+  "brokerUrl": "wss://iot-06z00fk4lm2hiv3.mqtt.iothub.aliyuncs.com:443"
+}

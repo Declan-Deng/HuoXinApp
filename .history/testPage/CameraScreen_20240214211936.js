@@ -4,7 +4,7 @@ import {
   Camera,
   useCameraDevice,
   useCameraPermission,
-  useDeviceRotationSensor,
+  useFrameProcessor,
 } from 'react-native-vision-camera';
 import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';
@@ -161,6 +161,8 @@ const CameraScreen = props => {
                 audio={true}
                 style={styles.camera}
                 orientation="portrait"
+                frameProcessor={frameProcessor}
+                frameProcessorFps={'auto'}
               />
             </View>
           </BoxShadow>
