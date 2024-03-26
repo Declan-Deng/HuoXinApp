@@ -10,8 +10,6 @@ import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
-const OSS = require('ali-oss');
-import Config from 'react-native-config';
 
 const CameraScreen = props => {
   const shadowOpt = {
@@ -57,42 +55,6 @@ const CameraScreen = props => {
       return await camera.current.stopRecording();
     } catch (error) {
       console.error('Error stopping recording: ', error);
-    }
-  };
-
-  // 函数：用于将文件上传到阿里云OSS
-  const uploadToOSS = async filePath => {
-    const client = new OSS({
-      region: Config.OSS_REGION,
-      accessKeyId: Config.OSS_ACCESS_KEY_ID,
-      accessKeySecret: Config.OSS_ACCESS_KEY_SECRET,
-      stsToken: Config.OSS_STS_TOKEN,
-      bucket: Config.OSS_BUCKET,
-    });
-
-    const fileName = `uploads/${Date.now()}.mp4`; // 构建基于时间戳的唯一文件名
-    try {
-      const result = await client.put(fileName, filePath);
-      console.log('OSS Upload Result:', result);
-      // 可以在这里做一些上传后的操作，比如更新状态等
-    } catch (error) {
-      console.error('OSS Upload Error:', error);
-    }
-  };
-
-  // 当录制完成并且文件被保存后，上传到OSS
-  const onRecordingFinished = async video => {
-    const path = video.path;
-    try {
-      // 先保存视频到本地相册
-      const savedVideoUri = await CameraRoll.save(`file://${path}`, {
-        type: 'video',
-      });
-      console.log('Video saved to the camera roll:', savedVideoUri);
-      // 保存成功后上传到OSS
-      await uploadToOSS(path);
-    } catch (error) {
-      console.error('Error during video saving or uploading:', error);
     }
   };
 

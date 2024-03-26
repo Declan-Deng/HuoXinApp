@@ -71,10 +71,20 @@ function LoginPage(props) {
   };
 
   useEffect(() => {
+    const errorHandler = (error, isFatal) => {
+      console.log('Global Error Caught:', error, 'Fatal:', isFatal);
+    };
+
+    // 注意: ErrorUtils.setGlobalHandler 可能在某些环境中不直接可用，这里仅作为示例
+    global.ErrorUtils.setGlobalHandler(errorHandler);
+
+    // 其他初始化逻辑
+  }, []);
+
+  useEffect(() => {
     // 定义一个立即执行的异步函数
     const initializeAsync = async () => {
       try {
-        console.log('开始执行初始化操作...');
         // 调用异步初始化函数
         await initializeData();
         // 初始化完成后，获取设备名

@@ -74,7 +74,6 @@ function LoginPage(props) {
     // 定义一个立即执行的异步函数
     const initializeAsync = async () => {
       try {
-        console.log('开始执行初始化操作...');
         // 调用异步初始化函数
         await initializeData();
         // 初始化完成后，获取设备名

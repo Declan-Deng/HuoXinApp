@@ -10,8 +10,6 @@ import {CameraRoll} from '@react-native-camera-roll/camera-roll';
 import {BoxShadow} from 'react-native-shadow';
 import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
-const OSS = require('ali-oss');
-import Config from 'react-native-config';
 
 const CameraScreen = props => {
   const shadowOpt = {
