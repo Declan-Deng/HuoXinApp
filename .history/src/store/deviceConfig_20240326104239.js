@@ -6,6 +6,7 @@ import {
 import {MMKVLoader, create} from 'react-native-mmkv-storage';
 import data from '../assert/deviceInfo.json';
 import iot from '../utils/alibabacloud-iot-device-sdk';
+const OSS = require('ali-oss');
 
 // MMKV实例初始化
 const deviceConfig = new MMKVLoader()

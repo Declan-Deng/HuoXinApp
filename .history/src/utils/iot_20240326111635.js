@@ -61,7 +61,7 @@ const connectToService = async (overrideConfig = {}, onConnected) => {
 
     try {
       const client = new OSS({
-        region: 'oss-cn-shanghai',
+        region: 'yourRegion',
         accessKeyId: Config.OSS_ACCESS_KEY_ID,
         accessKeySecret: Config.OSS_ACCESS_KEY_SECRET,
       });

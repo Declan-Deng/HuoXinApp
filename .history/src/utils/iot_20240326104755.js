@@ -2,7 +2,6 @@ import {deviceConfig} from '../store/deviceConfig';
 const iot = require('./alibabacloud-iot-device-sdk');
 import {dynamicRegister} from '../store/deviceConfig';
 const OSS = require('ali-oss');
-import Config from 'react-native-config';
 
 const connectToService = async (overrideConfig = {}, onConnected) => {
   // 从MMKV获取配置信息
@@ -61,9 +60,9 @@ const connectToService = async (overrideConfig = {}, onConnected) => {
 
     try {
       const client = new OSS({
-        region: 'oss-cn-shanghai',
-        accessKeyId: Config.OSS_ACCESS_KEY_ID,
-        accessKeySecret: Config.OSS_ACCESS_KEY_SECRET,
+        region: 'yourRegion',
+        accessKeyId: process.env.OSS_ACCESS_KEY_ID,
+        accessKeySecret: process.env.OSS_ACCESS_KEY_SECRET,
       });
 
       const options = {

@@ -2,7 +2,6 @@ import {deviceConfig} from '../store/deviceConfig';
 const iot = require('./alibabacloud-iot-device-sdk');
 import {dynamicRegister} from '../store/deviceConfig';
 const OSS = require('ali-oss');
-import Config from 'react-native-config';
 
 const connectToService = async (overrideConfig = {}, onConnected) => {
   // 从MMKV获取配置信息
@@ -58,24 +57,6 @@ const connectToService = async (overrideConfig = {}, onConnected) => {
   device.on('connect', async () => {
     console.log('Connected successfully!');
     onConnected(); // 调用成功回调
-
-    try {
-      const client = new OSS({
-        region: 'oss-cn-shanghai',
-        accessKeyId: Config.OSS_ACCESS_KEY_ID,
-        accessKeySecret: Config.OSS_ACCESS_KEY_SECRET,
-      });
-
-      const options = {
-        storageClass: 'Standard',
-        acl: 'private',
-        dataRedundancyType: 'LRS',
-      };
-      const result = await client.putBucket('examplebucket', options);
-      console.log('OSS Bucket created successfully:', result);
-    } catch (err) {
-      console.error('Failed to create OSS Bucket:', err);
-    }
   });
 
   return device;
