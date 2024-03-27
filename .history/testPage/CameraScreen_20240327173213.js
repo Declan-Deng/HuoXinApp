@@ -12,7 +12,6 @@ import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 const OSS = require('ali-oss');
 import Config from 'react-native-config';
-import RNFS from 'react-native-fs'; // 导入react-native-fs
 
 const CameraScreen = props => {
   const shadowOpt = {
@@ -100,17 +99,7 @@ const CameraScreen = props => {
       });
       console.log('Video saved to the camera roll:', savedVideoUri);
       // 保存成功后上传到OSS
-      await uploadToOSS(path, orderId)
-        .then(() => {
-          console.log('Upload success, deleting local file...');
-          return RNFS.unlink(path); // 删除本地文件
-        })
-        .then(() => {
-          console.log('Local file deleted successfully');
-        })
-        .catch(error => {
-          console.error('Error during video saving or uploading:', error);
-        });
+      await uploadToOSS(path, orderId);
     } catch (error) {
       console.error('Error during video saving or uploading:', error);
     }

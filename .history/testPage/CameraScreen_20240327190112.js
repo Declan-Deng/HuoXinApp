@@ -12,7 +12,6 @@ import {LinearProgress, Overlay, Button, Icon} from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 const OSS = require('ali-oss');
 import Config from 'react-native-config';
-import RNFS from 'react-native-fs'; // 导入react-native-fs
 
 const CameraScreen = props => {
   const shadowOpt = {
