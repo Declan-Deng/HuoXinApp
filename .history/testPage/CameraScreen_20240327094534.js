@@ -115,6 +115,16 @@ const CameraScreen = props => {
       startTesting();
       camera.current.startRecording({
         onRecordingFinished: onRecordingFinished, // 文件保存后调用上传
+        //  async video => {
+        //   const path = video.path;
+        //   try {
+        //     await CameraRoll.save(`file://${path}`, {
+        //       type: 'video',
+        //     });
+        //   } catch (error) {
+        //     console.error(error);
+        //   }
+        // },
         onRecordingError: error => console.error(error),
         videoBitRate: 'low',
       });

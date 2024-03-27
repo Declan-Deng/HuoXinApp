@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 0,
   },
 
   h4: {color: '#946450', fontSize: 20, textAlign: 'center', marginTop: 10},

@@ -61,7 +61,7 @@ const CameraScreen = props => {
   };
 
   // 函数：用于将文件上传到阿里云OSS
-  const uploadToOSS = async (filePath, orderId) => {
+  const uploadToOSS = async filePath => {
     const client = new OSS({
       region: Config.OSS_REGION,
       accessKeyId: Config.OSS_ACCESS_KEY_ID,
@@ -72,14 +72,7 @@ const CameraScreen = props => {
 
     const fileName = `uploads/${Date.now()}.mp4`; // 构建基于时间戳的唯一文件名
     try {
-      // 添加元数据：使用meta属性携带订单ID
-      const options = {
-        meta: {
-          orderId: orderId, // 将订单ID作为文件的元数据
-        },
-      };
-
-      const result = await client.put(fileName, filePath, options);
+      const result = await client.put(fileName, filePath);
       console.log('OSS Upload Result:', result);
       // 可以在这里做一些上传后的操作，比如更新状态等
     } catch (error) {
@@ -115,6 +108,16 @@ const CameraScreen = props => {
       startTesting();
       camera.current.startRecording({
         onRecordingFinished: onRecordingFinished, // 文件保存后调用上传
+        //  async video => {
+        //   const path = video.path;
+        //   try {
+        //     await CameraRoll.save(`file://${path}`, {
+        //       type: 'video',
+        //     });
+        //   } catch (error) {
+        //     console.error(error);
+        //   }
+        // },
         onRecordingError: error => console.error(error),
         videoBitRate: 'low',
       });

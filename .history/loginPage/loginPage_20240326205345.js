@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   KeyboardAvoidingView,
   Text,
@@ -10,17 +10,33 @@ import {
   ScrollView,
 } from 'react-native';
 import {Icon, Overlay} from '@rneui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function SocialLoginPage(props) {
+import connectToService from '../src/utils/iot';
+import {deviceConfig, initializeData} from '../src/store/deviceConfig';
+
+function LoginPage(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  // 使用状态控制设备名的加载状态
+  const [loading, setLoading] = useState(true);
 
   const [managerPassword, setManagerPassword] = useState('');
 
   const [visible, setVisible] = useState(false);
 
+  // 新增设备名状态
+  const [deviceName, setDeviceName] = useState('');
+
+  // 定义状态和更新函数
+  const [isConnected, setIsConnected] = useState(false);
+
+  let connectionStatusMessage = isConnected ? '设备连接成功' : '设备未连接';
+
   const doLogin = () => {
-    props.navigation.navigate('用户协议');
+    // alert(`用户名: ${username}, 密码: ${password}`);
+
+    props.navigation.navigate('用户确认');
     setUsername('');
     setPassword('');
   };
@@ -29,9 +45,15 @@ export default function SocialLoginPage(props) {
     setVisible(!visible);
   };
 
-  const checkpassword = () => {
+  const checkpassword = async () => {
     if (managerPassword === '123456') {
-      props.navigation.navigate('社会登录');
+      await AsyncStorage.setItem('currentScreen', '社会登录');
+
+      // 使用 reset 方法切换屏幕
+      props.navigation.reset({
+        index: 0,
+        routes: [{name: '社会登录'}],
+      });
       setVisible(false);
     } else {
       alert('密码错误');
@@ -39,22 +61,64 @@ export default function SocialLoginPage(props) {
     setManagerPassword('');
   };
 
+  // 新增的 handlePress 函数
+  const handlePress = () => {
+    console.log('发起连接请求');
+    connectToService(null, () => {
+      // 成功回调
+      setIsConnected(true);
+    });
+  };
+
+  useEffect(() => {
+    // 定义一个立即执行的异步函数
+    const initializeAsync = async () => {
+      try {
+        console.log('开始执行初始化操作...');
+        // 调用异步初始化函数
+        await initializeData();
+        // 初始化完成后，获取设备名
+        const name = await deviceConfig.getStringAsync('deviceName');
+        setDeviceName(name || '未知设备');
+        console.log('初始化完成。');
+        setLoading(false);
+      } catch (error) {
+        console.error('初始化或获取设备名时发生错误:', error);
+      }
+    };
+
+    // 执行这个异步函数
+    initializeAsync();
+  }, []);
+
+  // 渲染部分，使用loading状态来控制加载指示器或者设备名的显示
+  if (loading) {
+    return <Text>Loading...</Text>; // 或者其他加载指示UI
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
       <ScrollView>
         <View>
-          <TouchableOpacity style={styles.switchButton} onPress={doSwitch}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.buttonTextS}>切换模式</Text>
-              <Icon name="sync-alt" type="material" color="white" />
-            </View>
-          </TouchableOpacity>
-
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={{marginTop: 10}}>{connectionStatusMessage}</Text>
+            <TouchableOpacity style={styles.switchButton} onPress={doSwitch}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={styles.buttonTextS}>管理设备</Text>
+                <Icon name="sync-alt" type="material" color="white" />
+              </View>
+            </TouchableOpacity>
+          </View>
           <Text style={[styles.h2]}>火星智慧心理 AI检测</Text>
 
-          <Text style={[styles.h4]}>社会端</Text>
-          <Icon name="person-add" type="material" color="#946450" />
+          <Text style={[styles.h4]}>学生端</Text>
+          <Icon name="contact-emergency" type="material" color="#946450" />
 
           <View style={[styles.container]}>
             <Text style={[styles.h3]}>登录</Text>
@@ -87,7 +151,6 @@ export default function SocialLoginPage(props) {
           <TouchableOpacity style={styles.circleButton} onPress={doLogin}>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.buttonText}>确认登录</Text>
-              <Icon name="login" type="material" color="white" />
             </View>
           </TouchableOpacity>
         </View>
@@ -96,9 +159,13 @@ export default function SocialLoginPage(props) {
         isVisible={visible}
         onBackdropPress={doSwitch}
         overlayStyle={styles.overlayStyle}>
-        <Text style={styles.overlaytext}>输入管理员密码以切换模式</Text>
+        <Text style={styles.deviceName}>设备名: {deviceName}</Text>
+        {/* 新增的按钮 */}
+        <TouchableOpacity onPress={handlePress} style={styles.connectButton}>
+          <Text style={styles.buttonText}>启用设备</Text>
+        </TouchableOpacity>
+        <Text style={styles.overlaytext}>输入管理员密码以管理设备</Text>
         <TextInput
-          // style={styles.itemBase}
           style={[styles.overlayPassword, {textAlign: 'center'}]}
           placeholder=" 请输入管理员密码"
           value={managerPassword}
@@ -123,12 +190,11 @@ const styles = StyleSheet.create({
   container: {
     margin: 40,
     marginHorizontal: 100,
-    paddingVertical: 50,
+    paddingVertical: 40,
     borderRadius: 12,
     borderWidth: 5,
     borderColor: '#ddd',
     padding: 20,
-    fontSize: 30,
     fontWeight: 'bold',
   },
   h3: {
@@ -217,4 +283,21 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
   },
+
+  // 新增按钮样式
+  connectButton: {
+    borderRadius: 8,
+    backgroundColor: '#517fa4', // 可以根据您的设计调整颜色
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 40, // 根据需要调整高度
+    marginBottom: 50, // 为按钮添加一些垂直外边距
+    width: 120,
+  },
+
+  deviceName: {
+    marginBottom: 20,
+  },
 });
+
+export default LoginPage;

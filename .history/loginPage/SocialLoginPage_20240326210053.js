@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import {
   KeyboardAvoidingView,
   Text,
@@ -14,17 +14,12 @@ import {Icon, Overlay} from '@rneui/themed';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function SocialLoginPage(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
   const [managerPassword, setManagerPassword] = useState('');
 
   const [visible, setVisible] = useState(false);
 
   const doLogin = () => {
     props.navigation.navigate('用户确认');
-    setUsername('');
-    setPassword('');
   };
 
   const doSwitch = () => {
@@ -71,6 +66,11 @@ export default function SocialLoginPage(props) {
               style={styles.qrCode}
             />
           </View>
+          <TouchableOpacity style={styles.circleButton} onPress={doLogin}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Text style={styles.buttonText}>确认登录</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
       <Overlay
@@ -102,14 +102,13 @@ export default function SocialLoginPage(props) {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 40,
+    margin: 30,
+    marginBottom: 35,
     marginHorizontal: 150,
-    paddingVertical: 50,
+    paddingVertical: 30,
     borderRadius: 12,
     borderWidth: 5,
     borderColor: '#ddd',
-    padding: 20,
-    fontSize: 30,
     fontWeight: 'bold',
   },
   h3: {
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 30,
+    marginTop: 0,
   },
 
   h4: {color: '#946450', fontSize: 20, textAlign: 'center', marginTop: 10},

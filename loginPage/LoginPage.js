@@ -107,7 +107,6 @@ function LoginPage(props) {
               alignItems: 'flex-start',
               justifyContent: 'space-between',
             }}>
-            <Text style={styles.deviceName}>设备名: {deviceName}</Text>
             <Text style={{marginTop: 10}}>{connectionStatusMessage}</Text>
             <TouchableOpacity style={styles.switchButton} onPress={doSwitch}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -160,6 +159,7 @@ function LoginPage(props) {
         isVisible={visible}
         onBackdropPress={doSwitch}
         overlayStyle={styles.overlayStyle}>
+        <Text style={styles.deviceName}>设备名: {deviceName}</Text>
         {/* 新增的按钮 */}
         <TouchableOpacity onPress={handlePress} style={styles.connectButton}>
           <Text style={styles.buttonText}>启用设备</Text>
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 53,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 30,
+    marginTop: 0,
   },
 
   h4: {color: '#946450', fontSize: 20, textAlign: 'center', marginTop: 10},
@@ -293,6 +293,10 @@ const styles = StyleSheet.create({
     height: 40, // 根据需要调整高度
     marginBottom: 50, // 为按钮添加一些垂直外边距
     width: 120,
+  },
+
+  deviceName: {
+    marginBottom: 20,
   },
 });
 
